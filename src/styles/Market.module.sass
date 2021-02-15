@@ -1,0 +1,263 @@
+@import ./MediaQueries
+
+.market
+  width: 1296px
+
+  margin: 0 auto
+  margin-top: 24px
+
+  @include max-medium-width
+    width: 688px
+
+  @include max-tablet-width
+    width: 320px
+
+
+.questionContainer
+  display: flex
+  align-items: center
+
+  width: 60%
+
+  @include max-medium-width
+    width: 100%
+
+.questionIconContainer
+  min-width: 64px
+  width: 64px
+  height: 64px
+
+  margin-right: 16px 
+
+  object-fit: contain
+
+  @include max-tablet-width
+    min-width: 48px
+    width: 48px
+    height: 48px
+
+.questionIcon
+  width: 100%
+  height: 100%
+
+.question
+  font-size: 18px
+  font-weight: 500
+  text-align: justify
+
+  @include max-tablet-width
+    font-size: 16px
+  
+.cards
+  display: flex
+  margin: 24px 0
+
+  .card
+    border-bottom-right-radius: 16px
+    box-shadow: 2px 2px 10px rgba(42, 44, 47, 0.1)
+    padding: 12px
+
+    margin-right: 16px
+
+    .heading
+      font-size: 12px
+
+      margin-bottom: 4px
+      color: #5d5d5d
+
+    .detail
+      font-size: 16px
+    
+.tradeContainer
+  width: 50%
+
+  padding: 24px
+  margin: 32px auto
+  border-bottom-right-radius: 24px
+
+  box-shadow: 0px 0px 24px rgba(42, 44, 47, 0.1)
+
+  @include max-medium-width
+    width: 80%
+
+  @include max-tablet-width
+    width: 100%
+
+    padding: 8px
+
+  .tradeOptions
+    width: 90%
+
+    display: flex
+    margin: 0 auto
+
+    & *
+      outline: none
+      border: none
+      background: none
+
+      flex: 50%
+
+      font-size: 16px
+      font-weight: 500
+      text-align: center
+
+      padding: 8px
+      border-bottom: 2px solid #979797
+
+      cursor: pointer
+
+      @include max-tablet-width
+        font-size: 14px
+
+    .tradeOptionSelected
+      border-bottom: 2px solid #2d0fb4
+  
+  .makeTradeContainer
+    width: 90%
+    margin: 24px auto
+
+    .makeTradeOptionsContainer
+      margin: 16px 0
+
+      .chooseOutcomeLabel
+        font-size: 14px
+        font-weight: 600
+
+        color: #414141
+
+        @include max-tablet-width
+          font-size: 12px
+
+      .makeTradeOptions
+        width: 80%
+        margin: 12px auto
+
+        display: flex
+
+        & *
+          outline: none
+          border: none
+          background: none
+
+          flex: 50%
+
+          text-align: center
+          font-size: 16px
+          padding: 12px
+
+          background-color: #e7e7e7
+          color: black
+
+          border-bottom-right-radius: 12px
+
+          cursor: pointer
+
+          @include max-tablet-width
+            font-size: 14px
+
+        & :first-child
+          margin-right: 16px
+
+        .option1
+          background-color: #05b16a
+          color: white
+
+        .option2
+          background-color: #e04545
+          color: white
+
+        @include max-tablet-width
+          width: 90%
+    
+    .tradeValueInput
+      margin: 24px 0
+
+      .tradeValueInputLabel
+        font-size: 14px
+        font-weight: 600
+
+        color: #414141
+
+      input
+        width: 100%
+        outline: none
+        border: none
+
+        font-size: 16px
+        padding: 12px
+
+        border-bottom: 1px solid #929292
+
+        & ::-webkit-outer-spin-button,
+        & ::-webkit-inner-spin-button
+          -webkit-appearance: none
+          margin: 0
+
+        -moz-appearance: textfield
+
+        @include max-tablet-width
+          font-size: 14px
+
+    .tradeDetails
+      .tradeDetail
+        display: flex
+        font-size: 14px
+        font-weight: 500
+
+        margin: 4px auto
+
+        & :first-child
+          flex: 72%
+
+        & :last-child
+          flex: 28%
+          text-align: end
+
+
+  .trade
+    display: grid
+    place-items: center
+
+    & button
+      border: none
+      outline: none
+      background: none
+
+      font-size: 16px
+      background: #1652f0
+      color: white
+
+      padding: 8px 16px
+
+      border-radius: 4px
+
+      &:hover
+        background: #1441b4
+
+      @include max-tablet-width
+        margin-bottom: 16px
+
+      cursor: pointer
+      
+.marketDescription
+  margin: 24px 0
+
+  & :first-child
+    font-size: 14px
+    font-weight: 500
+
+    color: #414141
+
+    @include max-tablet-width
+      font-size: 12px
+
+  & :last-child
+    font-size: 16px
+    font-weight: 400 
+    text-align: justify
+
+    @include max-tablet-width
+      font-size: 14px
+
+    margin: 4px 0

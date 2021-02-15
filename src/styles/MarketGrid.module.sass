@@ -1,0 +1,30 @@
+@import './MediaQueries'
+  
+.container
+  width: 1296px
+  margin: 0 auto
+
+  position: relative
+
+  display: grid
+  grid-template-columns: 400px 400px 400px
+  gap: 48px
+
+  padding: 48px
+  padding-top: 56px 
+  justify-content: center
+
+  @include max-medium-width
+    width: 688px
+    grid-template-columns: 320px 320px
+
+  @include max-tablet-width
+    width: 320px
+    grid-template-columns: 320px
+    gap: 24px
+    // padding: 12px
+
+.marketHeading
+  position: absolute
+  
+  top: 16px

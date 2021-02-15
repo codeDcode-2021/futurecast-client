@@ -1,6 +1,3 @@
-import Head from 'next/head';
-import Link from 'next/link';
-
 import Nav from '../components/Nav';
 import InputField from '../components/InputField';
 import Container from '../styles/Home.module.sass';
@@ -9,10 +6,10 @@ import Footer from '../components/Footer';
 
 const SignUp = () => (
   <div className={Container.container}>
-    <Head>
+    <head>
       <title>Ether Market - Login</title>
       <link rel="icon" href="/favicon.ico" />
-    </Head>
+    </head>
     <Nav />
     <form className={styles.container}>
       <div className={styles.fieldContainer}>
@@ -43,9 +40,9 @@ const SignUp = () => (
         </button>
       </div>
       <div className={styles.actionLinks}>
-        <Link href="/login">
+        <a href="/login">
           <p className={styles.actionLink}>login instead</p>
-        </Link>
+        </a>
       </div>
     </form>
     <Footer />

@@ -1,0 +1,56 @@
+@import "variables"
+@import './MediaQueries'
+
+.nav
+  display: flex
+  width: 1296px
+  height: 10vh
+
+  margin: 0 auto
+
+  align-items: center
+  justify-content: space-between
+
+  @include max-medium-width
+    width: 688px
+
+  @include max-tablet-width
+    width: 320px
+
+
+.logo
+  display: flex
+  flex-direction: column
+
+  font-family: $primary-font
+  font-weight: 700
+  font-size: 18px
+
+  line-height: 1
+
+  text-transform: uppercase
+
+.navOptions
+  list-style: none
+
+  display: flex
+  align-items: center
+  justify-content: center
+
+.login
+  margin-right: 24px
+
+  cursor: pointer
+
+.signup
+  font-size: 14px
+  background-color: #262626
+  color: #fff
+  padding: 12px
+  
+  border-radius: 12px
+
+  cursor: pointer
+
+  @include max-tablet-width
+    display: none

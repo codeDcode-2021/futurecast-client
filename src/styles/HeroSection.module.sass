@@ -1,0 +1,175 @@
+@import ./variables
+@import ./MediaQueries
+
+.container
+  width: 1296px
+  height: 48vh
+
+  display: flex
+
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  margin: 24px auto
+
+  background: #623CEA
+
+  @include max-medium-width
+    width: 688px
+
+  @include max-tablet-width
+    width: 320px
+
+.textContainer
+  // box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.1)
+
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+  width: 800px
+  height: 95%
+
+  border-radius: 16px
+
+  padding: 16px
+  color: white
+
+  font-family: $primary-font
+
+  @include max-medium-width
+    width: 600px
+  
+  @include max-tablet-width
+    width: 100%
+
+.heading
+  font-size: 26px
+  font-weight: 900
+
+  text-align: center
+
+  margin: 12px
+
+  @include max-medium-width
+    font-size: 24px
+  
+  @include max-tablet-width
+    font-size: 22px
+  
+  @include max-mobile-width
+    font-size: 20px
+
+.para
+  font-size: 15px
+  width: 80%
+  text-align: justify
+  font-weight: 500
+
+  @include max-medium-width
+    font-size: 14px
+  
+  @include max-mobile-width
+    min-width: 90%
+
+$white: #fff
+$gray: #ffffff
+
+.formContainer
+  width: 100%
+  
+  display: grid
+  place-items: center
+
+  margin-top: 36px
+  
+  @include max-mobile-width
+    margin-top: 16px
+
+.formGroup
+  position: relative
+  padding: 15px 0 0
+  width: 75%
+
+  display: flex
+
+  @include max-tablet-width
+    flex-direction: column
+  
+  @include max-mobile-width
+    width: 88%
+
+
+.formField
+  font-family: inherit
+  width: 75%
+  border: 0
+  border-bottom: 1px solid $gray
+  outline: 0
+  font-size: 14px
+  color: $white
+  padding: 7px 0
+  background: transparent
+  transition: border-color 0.2s
+
+  margin-right: 16px
+
+  &::placeholder
+    color: transparent
+
+  &:placeholder-shown ~ .formLabel
+    font-size: 14px
+    cursor: text
+    top: 20px
+
+  @include max-tablet-width
+    margin-right: 0
+    width: 100%
+
+.formLabel
+  position: absolute
+  top: 0
+  display: block
+  transition: 0.2s
+  font-size: 1rem
+  color: $gray
+
+.formField:focus
+  ~ .formLabel
+    position: absolute
+    top: 0
+    display: block
+    transition: 0.2s
+    font-size: 16px
+    color: $white
+
+    @include max-mobile-width
+      font-size: 14px
+  
+  padding-bottom: 6px
+  border-width: 2px
+  border-image-slice: 1
+
+/* reset input */
+.formField
+  &:required, &:invalid
+    box-shadow: none
+
+.signup
+  background: none
+  outline: none
+  border: none
+
+  background-color: white
+  padding: 8px 16px
+
+  cursor: pointer
+
+  border-radius: 8px
+
+  @include max-tablet-width
+    width: fit-content
+    margin: 0 auto
+    margin-top: 16px

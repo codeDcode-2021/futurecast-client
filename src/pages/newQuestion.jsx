@@ -1,4 +1,3 @@
-import Head from 'next/head';
 
 import Nav from '../components/Nav';
 import InputField from '../components/InputField';
@@ -8,10 +7,10 @@ import Footer from '../components/Footer';
 
 const newQuestion = () => (
   <div className={Container.container}>
-    <Head>
+    <head>
       <title>Ether Market - Add Question</title>
       <link rel="icon" href="/favicon.ico" />
-    </Head>
+    </head>
     <Nav />
     <form className={styles.newQuestion}>
       <div className={styles.fieldContainer}>

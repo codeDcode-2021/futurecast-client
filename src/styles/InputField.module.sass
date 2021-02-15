@@ -1,0 +1,68 @@
+@import ./MediaQueries
+
+$black: #000
+$gray: #8a8a8a
+
+
+.formContainer
+  width: 100%
+  
+  display: grid
+  place-items: center
+
+.formGroup
+  position: relative
+  padding: 15px 0 0
+  width: 100%
+
+  display: flex
+
+
+.formField
+  font-family: inherit
+  width: 100%
+  border: 0
+  border-bottom: 1px solid $gray
+  outline: 0
+  font-size: 14px
+  color: $black
+  padding: 7px 0
+  background: transparent
+  transition: border-color 0.2s
+
+  &::placeholder
+    color: transparent
+
+  &:placeholder-shown ~ .formLabel
+    font-size: 14px
+    cursor: text
+    top: 20px
+
+.formLabel
+  position: absolute
+  top: 0
+  display: block
+  transition: 0.2s
+  font-size: 14px
+  color: $gray
+
+.formField:focus
+  ~ .formLabel
+    position: absolute
+    top: 0
+    display: block
+    transition: 0.2s
+    font-size: 16px
+    color: $black
+
+    @include max-mobile-width
+      font-size: 14px
+  
+  padding-bottom: 6px
+  border-width: 2px
+  border-image-slice: 1
+
+/* reset input */
+.formField
+  &:required, &:invalid
+    box-shadow: none

@@ -1,0 +1,46 @@
+@import './MediaQueries'
+
+.container
+  height: 100%
+
+  background-color: rgba(255, 255, 255, 0.6)
+  border-bottom-right-radius: 24px
+  box-shadow: 0px 0px 10px rgba(48, 51, 58, 0.1)
+
+  padding: 32px
+
+  font-size: 14px
+
+  @include max-mobile-width
+    font-size: 12px
+
+.featured 
+  box-shadow: 10px 10px 10px rgba(212, 255, 209, 0.609)
+
+.question
+  font-size: 600
+
+  text-align: justify
+
+.options
+  margin-top: 16px
+
+.voteOptions
+  display: flex
+
+  align-items: center
+
+.voteOption
+  // box-shadow: 2px 2px 10px rgba(46, 54, 68, 0.1)
+
+  margin-right: 32px
+  margin-top: 16px 
+  // padding: 12px
+
+  font-weight: 700
+  font-size: 16px
+
+  border-bottom-right-radius: 16px
+
+.voteValue
+  color: #6f11e9

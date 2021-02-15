@@ -1,0 +1,66 @@
+@import ./MediaQueries
+
+.container
+  width: 40%
+
+  margin: 0 auto
+  margin-top: 64px
+  padding: 48px
+
+  border: 1px solid black
+  border-bottom-right-radius: 36px
+
+  @include max-medium-width
+    width: 60%
+
+  @include max-tablet-width
+    width: 85%
+
+  @include max-mobile-width
+    width: 100%
+
+    padding: 16px
+
+.fieldContainer
+  width: 100%
+
+  display: flex
+  justify-content: center
+  align-items: center
+
+  margin-top: 24px
+
+.optionContainer
+  display: grid
+
+  grid-template-columns: 1fr 1fr
+  gap: 64px
+
+  @include max-tablet-width
+    display: initial
+
+.actionButton
+  background: none
+  outline: none
+  border: none
+
+  font-size: 14px
+
+  background-color: #1ec355
+  color: white
+  padding: 16px
+  margin-top: 16px
+
+  cursor: pointer
+  border-radius: 8px
+
+.actionLinks
+  margin-top: 16px 
+
+.actionLink
+  text-align: center
+
+  font-size: 14px
+  margin-top: 8px
+
+  cursor: pointer

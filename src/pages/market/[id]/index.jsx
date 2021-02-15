@@ -1,21 +1,15 @@
-import Head from 'next/head';
-import { GetServerSideProps } from 'next';
-
 import Trade from 'components/Trade';
 import Nav from '../../../components/Nav';
 import styles from '../../../styles/Market.module.sass';
 import Container from '../../../styles/Home.module.sass';
 
-interface Props {
-  id: string | string[] | undefined | null;
-}
 
 const Market = () => (
   <div className={Container.container}>
-    <Head>
+    <head>
       <title>Ether Market - Market</title>
       <link rel="icon" href="/favicon.ico" />
-    </Head>
+    </head>
     <Nav />
     <div className={styles.market}>
       <div className={styles.questionContainer}>
@@ -54,10 +48,10 @@ const Market = () => (
   </div>
 );
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const { id } = context.params ? context.params : { id: null };
 
-  const props: Props = {
+  const props = {
     id,
   };
 

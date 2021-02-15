@@ -1,6 +1,5 @@
 import React from 'react';
-import Head from 'next/head';
-import { GetServerSideProps } from 'next';
+
 
 import Nav from '../components/Nav';
 import styles from '../styles/Home.module.sass';
@@ -11,10 +10,6 @@ import Footer from '../components/Footer';
 import getFactory from '../src/integ/factory';
 import questionInstance from '../src/integ/question';
 
-interface Market {
-  id: string;
-  marketName: String;
-}
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -27,15 +22,15 @@ export default class Home extends React.Component {
     this.loadData();
   }
 
-export default function Home(props: Props) {
+export default function Home(props) {
   const { markets } = props;
 
   return (
     <div className={styles.container}>
-      <Head>
+      <head>
         <title>Ether Market - Home</title>
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </head>
       <Nav />
       <HeroSection />
       <MarketGrid markets={markets} />
@@ -72,10 +67,10 @@ export default function Home(props: Props) {
     const { markets } = this.state;
     return (
       <div className={styles.container}>
-        <Head>
+        <head>
           <title>Ether Market - Home</title>
           <link rel="icon" href="/favicon.ico" />
-        </Head>
+        </head>
         <Nav />
         <HeroSection />
         <MarketGrid markets={markets || []} />
