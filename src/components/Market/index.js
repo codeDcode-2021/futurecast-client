@@ -1,16 +1,22 @@
-import Trade from 'components/Trade';
-import Nav from '../../../components/Nav';
-import styles from '../../../styles/Market.module.sass';
-import Container from '../../../styles/Home.module.sass';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
+import Trade from "../Trade";
+import styles from "../../styles/Market.module.sass";
 
-const Market = () => (
-  <div className={Container.container}>
-    <head>
-      <title>Ether Market - Market</title>
-      <link rel="icon" href="/favicon.ico" />
-    </head>
-    <Nav />
+const Market = ({ markets }) => {
+  const [details, setDetails] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (markets) {
+      const details = markets.filter((market) => market.details.address === id);
+      console.log(details);
+      setDetails(details[0]);
+    }
+  }, [markets, id]);
+
+  return details ? (
     <div className={styles.market}>
       <div className={styles.questionContainer}>
         <div className={styles.questionIconContainer}>
@@ -20,9 +26,7 @@ const Market = () => (
             className={styles.questionIcon}
           />
         </div>
-        <p className={styles.question}>
-          Will Joe Biden be President of the USA on March 1, 2021?
-        </p>
+        <p className={styles.question}>{details.details[0]}</p>
       </div>
       <div className={styles.cards}>
         <div className={styles.card}>
@@ -34,7 +38,7 @@ const Market = () => (
           <p className={styles.detail}>₹ 100,000</p>
         </div>
       </div>
-      <Trade />
+      <Trade details={details} />
       <div className={styles.marketDescription}>
         <p>Description:</p>
         <p>
@@ -45,17 +49,9 @@ const Market = () => (
         </p>
       </div>
     </div>
-  </div>
-);
-
-export const getServerSideProps = async (context) => {
-  const { id } = context.params ? context.params : { id: null };
-
-  const props = {
-    id,
-  };
-
-  return { props };
+  ) : (
+    <div></div>
+  );
 };
 
 export default Market;

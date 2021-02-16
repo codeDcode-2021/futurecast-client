@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import styles from '../../styles/Market.module.sass';
-import TradeDetails from './TradeDetails';
+import { useState } from "react";
+import styles from "../../styles/Market.module.sass";
+import TradeDetails from "./TradeDetails";
 
-const Trade = () => {
+const Trade = ({ details }) => {
   const [isBuying, setIsBuying] = useState(true);
   const [isOption1, setIsOption1] = useState(true);
 
   const buyingDetails = [
-    { detailLabel: 'Your avg. price', value: '₹ 0.00' },
-    { detailLabel: 'Estimated Shares Bought', value: '0.00' },
-    { detailLabel: 'Maximum Winnings', value: '₹ 0.00' },
-    { detailLabel: 'Max Return on investment', value: '0.00 %' },
+    { detailLabel: "Your avg. price", value: "₹ 0.00" },
+    { detailLabel: "Estimated Shares Bought", value: "0.00" },
+    { detailLabel: "Maximum Winnings", value: "₹ 0.00" },
+    { detailLabel: "Max Return on investment", value: "0.00 %" },
   ];
 
   const sellingDetails = [
-    { detailLabel: 'Your avg. price', value: '₹ 0.00' },
-    { detailLabel: 'Remaining Shares', value: '0.00' },
-    { detailLabel: "You'll Receive", value: '0.00 USDC' },
+    { detailLabel: "Your avg. price", value: "₹ 0.00" },
+    { detailLabel: "Remaining Shares", value: "0.00" },
+    { detailLabel: "You'll Receive", value: "0.00 USDC" },
   ];
 
   return (
@@ -46,14 +46,14 @@ const Trade = () => {
               className={isOption1 ? styles.option1 : undefined}
               onClick={() => setIsOption1(true)}
             >
-              Yes
+              {details.details[3][0]}
             </button>
             <button
               type="button"
               className={!isOption1 ? styles.option2 : undefined}
               onClick={() => setIsOption1(false)}
             >
-              No
+              {details.details[3][1]}
             </button>
           </div>
         </div>
@@ -67,7 +67,7 @@ const Trade = () => {
       </div>
 
       <div className={styles.trade}>
-        <button type="button">{isBuying ? 'Buy!' : 'Sell!'}</button>
+        <button type="button">{isBuying ? "Buy!" : "Sell!"}</button>
       </div>
     </div>
   );

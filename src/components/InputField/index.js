@@ -1,13 +1,11 @@
-import styles from '../../styles/InputField.module.sass';
+import styles from "../../styles/InputField.module.sass";
 
-interface Props {
-  name: string;
-  placeholder: string;
-  type?: string;
-  required?: boolean;
-}
-
-const InputField = ({ name, placeholder, type, required }: Props) => (
+const InputField = ({
+  name,
+  placeholder,
+  type = "text",
+  required = "false",
+}) => (
   <div className={styles.formGroup}>
     <input
       className={styles.formField}
@@ -22,10 +20,5 @@ const InputField = ({ name, placeholder, type, required }: Props) => (
     </label>
   </div>
 );
-
-InputField.defaultProps = {
-  type: 'text',
-  required: false,
-};
 
 export default InputField;

@@ -1,16 +1,7 @@
 /* eslint-disable react/no-array-index-key */
-import styles from '../../../styles/Market.module.sass';
+import styles from "../../../styles/Market.module.sass";
 
-interface Detail {
-  detailLabel: String;
-  value: String;
-}
-
-interface Props {
-  details: Array<Detail>;
-}
-
-const TradeDetails = ({ details }: Props) => (
+const TradeDetails = ({ details }) => (
   <div className={styles.tradeDetails}>
     {details.map(({ detailLabel, value }, i) => (
       <div key={i} className={styles.tradeDetail}>
