@@ -4,20 +4,21 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment';
 import 'react-widgets/dist/css/react-widgets.css';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 
-const NewQuestion = () => {
+const NewQuestion = () => { 
 
 
-const [dateTime,setDateTime]=useState();
+const [dateTime,setDateTime]=useState(null);
 
 Moment.locale('en')
 momentLocalizer();
-  
-const handleTimeChange=(evt)=>{
-  setDateTime(evt.value);
-  console.log(dateTime);
+
+useEffect(() => console.log(dateTime), [dateTime]);
+
+const handleTimeChange=datetime=>{
+  setDateTime(datetime);
 }
   return(
   <form className={styles.newQuestion}>
@@ -39,8 +40,10 @@ const handleTimeChange=(evt)=>{
       <div className={styles.fieldContainer}>
         <InputField name="option2" placeholder="Option 2" required />
       </div>
-      <div>
+      <div className={styles.fieldContainer} >
+  
         <DateTimePicker value={dateTime} onChange={handleTimeChange} />
+      
       </div>
     </div>
     <div className={styles.fieldContainer}>
