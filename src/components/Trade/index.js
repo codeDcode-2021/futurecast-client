@@ -3,8 +3,16 @@ import styles from "../../styles/Market.module.sass";
 import TradeDetails from "./TradeDetails";
 
 const Trade = ({ details }) => {
-  const [isBuying, setIsBuying] = useState(true);
-  const [isOption1, setIsOption1] = useState(true);
+  const [whichOption, setWhichOption] = useState(0);
+
+  const buttonColorClasses = [
+    styles.option1,
+    styles.option2,
+    styles.option3,
+    styles.option4,
+    styles.option5,
+    styles.option6,
+  ];
 
   const buyingDetails = [
     { detailLabel: "Your avg. price", value: "₹ 0.00" },
@@ -13,48 +21,24 @@ const Trade = ({ details }) => {
     { detailLabel: "Max Return on investment", value: "0.00 %" },
   ];
 
-  const sellingDetails = [
-    { detailLabel: "Your avg. price", value: "₹ 0.00" },
-    { detailLabel: "Remaining Shares", value: "0.00" },
-    { detailLabel: "You'll Receive", value: "0.00 USDC" },
-  ];
-
   return (
     <div className={styles.tradeContainer}>
-      <div className={styles.tradeOptions}>
-        <button
-          type="button"
-          className={isBuying ? styles.tradeOptionSelected : undefined}
-          onClick={() => setIsBuying(true)}
-        >
-          Buy
-        </button>
-        <button
-          type="button"
-          className={!isBuying ? styles.tradeOptionSelected : undefined}
-          onClick={() => setIsBuying(false)}
-        >
-          Sell
-        </button>
-      </div>
       <div className={styles.makeTradeContainer}>
         <div className={styles.makeTradeOptionsContainer}>
           <p className={styles.chooseOutcomeLabel}>Pick Outcome</p>
           <div className={styles.makeTradeOptions}>
-            <button
-              type="button"
-              className={isOption1 ? styles.option1 : undefined}
-              onClick={() => setIsOption1(true)}
-            >
-              {details.details[3][0]}
-            </button>
-            <button
-              type="button"
-              className={!isOption1 ? styles.option2 : undefined}
-              onClick={() => setIsOption1(false)}
-            >
-              {details.details[3][1]}
-            </button>
+            {details.details[3].map((option, id) => (
+              <button
+                key={id}
+                type="button"
+                className={
+                  whichOption === id ? buttonColorClasses[id] : undefined
+                }
+                onClick={() => setWhichOption(id)}
+              >
+                {option}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -63,11 +47,11 @@ const Trade = ({ details }) => {
           <input type="number" step="0.01" placeholder="0.00" />
         </div>
 
-        <TradeDetails details={isBuying ? buyingDetails : sellingDetails} />
+        <TradeDetails details={buyingDetails} />
       </div>
 
       <div className={styles.trade}>
-        <button type="button">{isBuying ? "Buy!" : "Sell!"}</button>
+        <button type="button">Stake</button>
       </div>
     </div>
   );
