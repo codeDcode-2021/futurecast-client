@@ -2,7 +2,7 @@ import styles from "../../styles/Nav.module.sass";
 import Portis from '@portis/web3';
 import Web3 from 'web3';
 
-const portis = new Portis('1b0ac6e5-efa2-481a-a7d7-188b24722233', 'mainnet');
+const portis = new Portis('1b0ac6e5-efa2-481a-a7d7-188b24722233','kovan', { gasRelay: true });
 
 
 const Nav = ({ web3 }) => {
