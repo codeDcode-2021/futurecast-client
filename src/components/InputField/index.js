@@ -5,6 +5,8 @@ const InputField = ({
   placeholder,
   type = "text",
   required = "false",
+  onChange,
+  disabled = false,
 }) => (
   <div className={styles.formGroup}>
     <input
@@ -14,8 +16,10 @@ const InputField = ({
       id={name}
       type={type}
       required={required}
+      onChange={onChange}
+      disabled={disabled}
     />
-    <label htmlFor={name} className={styles.formLabel}>
+    <label htmlFor={name} className={styles.formLabel} aria-disabled={true}>
       {placeholder}
     </label>
   </div>

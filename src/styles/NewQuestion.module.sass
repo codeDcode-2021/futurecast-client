@@ -1,25 +1,40 @@
 @import ./MediaQueries
 
+.newQuestionContainer
+  min-height: 90vh
+  width: 1296px
+  margin: 0 auto
+
+  display: grid
+  place-items: center
+
+  transform: translateY(-12%)
+
+  @include max-medium-width
+    width: 688px
+
+  @include max-tablet-width
+    width: 320px
+
 .newQuestion
-  width: 54%
+  width: 60%
+
+  box-shadow: 2px 2px 10px rgba(39, 40, 41, 0.1)
+  border-bottom-right-radius: 24px
 
   margin: 0 auto
   margin-top: 64px
   padding: 48px
 
-  border: 1px solid black
-  border-bottom-right-radius: 36px
-
   @include max-medium-width
-    width: 77%
-
-  @include max-tablet-width
-    width: 85%
-
-  @include max-mobile-width
     width: 100%
 
-    padding: 16px
+.heading
+  font-size: 22px
+
+  @include max-tablet-width
+    font-size: 18px 
+
 
 .fieldContainer
   width: 100%
@@ -34,7 +49,7 @@
   display: grid
 
   grid-template-columns: 1fr 1fr
-  gap: 64px
+  gap: 12px
 
   @include max-tablet-width
     display: initial
@@ -45,8 +60,9 @@
   border: none
 
   font-size: 14px
+  text-align: center
 
-  background-color: #1ec355
+  background-color: #0779e4
   color: white
   padding: 16px
   margin-top: 16px
