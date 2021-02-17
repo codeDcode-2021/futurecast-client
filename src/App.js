@@ -8,6 +8,7 @@ import questionInstance from "./contracts/question";
 
 import Nav from "./components/Nav";
 import Market from "./components/Market";
+import Footer from "./components/Footer";
 import MarketGrid from "./components/MarketGrid";
 import HeroSection from "./components/HeroSection";
 import NewQuestion from "./components/NewQuestion";
@@ -62,6 +63,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
+      <Footer />
     </>
   );
 };

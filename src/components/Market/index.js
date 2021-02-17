@@ -4,17 +4,68 @@ import { useEffect, useState } from "react";
 import Trade from "../Trade";
 import styles from "../../styles/Market.module.sass";
 
+const parseDates = (unixTimeStamp) => {
+  const date = new Date(unixTimeStamp * 1000);
+
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = "0" + date.getMinutes();
+
+  const string = `${day} / ${month} / ${year} - ${hours}:${minutes.substr(-2)}`;
+
+  return string;
+};
+
 const Market = ({ markets }) => {
   const [details, setDetails] = useState(null);
   const { id } = useParams();
+  let phase = 0;
+  const phaseOptions = {
+    0: {
+      value: "Haven't started",
+      color: "black",
+    },
+    1: {
+      value: "Betting",
+      color: "#05b16a",
+    },
+    2: {
+      value: "Inactive",
+      color: "#e04545",
+    },
+    3: {
+      value: "Reporting",
+      color: "#ffc75f",
+    },
+    4: {
+      value: "Resolved",
+      color: "#0779e4",
+    },
+  };
 
   useEffect(() => {
     if (markets) {
       const details = markets.filter((market) => market.details.address === id);
-      console.log(details);
       setDetails(details[0]);
     }
   }, [markets, id]);
+
+  if (details) {
+    const dates = details.details[1];
+    const date = new Date() / 1000;
+
+    if (date < date[0]) {
+      phase = 0;
+    } else if (date >= dates[0] && date <= dates[1]) {
+      phase = 1;
+    } else if (date >= dates[1] && date <= dates[2]) {
+      phase = 2;
+    } else if (date >= dates[2]) {
+      phase = 3;
+    }
+  }
 
   return details ? (
     <div className={styles.market}>
@@ -30,16 +81,29 @@ const Market = ({ markets }) => {
       </div>
       <div className={styles.cards}>
         <div className={styles.card}>
-          <p className={styles.heading}>Market ends on</p>
-          <p className={styles.detail}>March 2, 2021</p>
+          <p className={styles.heading}>{phase ? "Started" : "Starts"} on</p>
+          <p className={styles.detail}>{parseDates(details.details[1][0])}</p>
         </div>
         <div className={styles.card}>
-          <p className={styles.heading}>Trade volume</p>
-          <p className={styles.detail}>₹ 100,000</p>
+          <p className={styles.heading}>Betting ends on</p>
+          <p className={styles.detail}>{parseDates(details.details[1][1])}</p>
+        </div>
+        <div className={styles.card}>
+          <p className={styles.heading}>Event ends on</p>
+          <p className={styles.detail}>{parseDates(details.details[1][2])}</p>
+        </div>
+        <div className={styles.card}>
+          <p className={styles.heading}>Phase</p>
+          <p
+            className={styles.detail}
+            style={{ color: phaseOptions[phase]["color"] }}
+          >
+            {phaseOptions[phase]["value"]}
+          </p>
         </div>
       </div>
       <Trade details={details} />
-      <div className={styles.marketDescription}>
+      {/* <div className={styles.marketDescription}>
         <p>Description:</p>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim nostrum
@@ -47,7 +111,7 @@ const Market = ({ markets }) => {
           consequuntur aperiam ea velit quidem optio praesentium itaque nobis
           sapiente eos possimus?
         </p>
-      </div>
+      </div> */}
     </div>
   ) : (
     <div></div>
