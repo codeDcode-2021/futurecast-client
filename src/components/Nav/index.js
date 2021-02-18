@@ -1,12 +1,23 @@
 import styles from "../../styles/Nav.module.sass";
 import Portis from "@portis/web3";
 import Web3 from "web3";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
+import { useState } from "react";
+
+import metalogo from "../../assets/metamask.svg";
+import portislogo from "../../assets/portis.svg";
 
 const portis = new Portis("1b0ac6e5-efa2-481a-a7d7-188b24722233", "kovan", {
   gasRelay: true,
 });
 
 const Nav = ({ setWalletAddress }) => {
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+
   const onClick = () => {
     window.web3.currentProvider
       .enable()
@@ -35,12 +46,39 @@ const Nav = ({ setWalletAddress }) => {
         <span>eum</span>
       </h1>
       <ul className={styles.navOptions}>
-        <button type="button" onClick={onClick}>
+        <button onClick={onOpenModal}>
           <li className={styles.signup}>Connect to Wallet</li>
         </button>
-        <button type="button" onClick={handlePortis}>
-          <li className={styles.signup}>Connect to Portis</li>
-        </button>
+        <Modal
+          open={open}
+          onClose={onCloseModal}
+          center
+          showCloseIcon={false}
+          aria-labelledby="wallet-connect-popup"
+          aria-describedby="a popup to connect crypto wallets to the app"
+        >
+          <div style={{ padding: "10px", textAlign: "center" }}>
+            <div style={{ marginBottom: "30px" }}>
+              <h1>EtherMarket</h1>
+            </div>
+            <div style={{ marginBottom: "15px" }}>
+              <h4>Connect your wallet</h4>
+            </div>
+            <button className={styles.btn} type="button" onClick={onClick}>
+              <span className={styles.btntxt}>MetaMask</span>
+              <span className={styles.btnlogo}>
+                <img width="24px" src={metalogo} />
+              </span>
+            </button>
+            <br />
+            <button className={styles.btn} type="button" onClick={handlePortis}>
+              <span className={styles.btntxt}>Portis</span>
+              <span className={styles.btnlogo}>
+                <img width="18px" src={portislogo} />
+              </span>
+            </button>
+          </div>
+        </Modal>
       </ul>
     </div>
   );

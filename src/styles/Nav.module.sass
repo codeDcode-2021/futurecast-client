@@ -44,8 +44,41 @@
 
 .login
   margin-right: 24px
-
   cursor: pointer
+
+.btn:hover
+    color: rgb(16, 187, 52)
+    border: 1px solid rgb(16, 187, 52)
+    border-radius: 4px
+    background-color: rgb(255, 255, 255)
+
+.btn
+  border: 1px solid rgb(223, 223, 223)
+  border-radius: 4px
+  background-color: rgb(255, 255, 255)
+  cursor: pointer
+  display: flex
+  margin-bottom: 8px
+  box-sizing: border-box
+  height: 56px
+  width: 320px
+
+.btntxt
+  height: 24px
+  width: -moz-fit-content
+  color: rgb(18, 20, 30)
+  font-size: 18px
+  letter-spacing: 0px
+  text-align: center
+  line-height: 24px
+  margin: 16px auto 16px 24px
+  float: left
+
+.btnlogo
+  height: 24px
+  width: 24px
+  margin: 16px 24px 16px auto
+  display: inline-block
 
 .signup
   font-size: 14px
@@ -56,6 +89,10 @@
   border-radius: 12px
 
   cursor: pointer
+
+  .img
+    width:24px
+    height:24px
 
   @include max-tablet-width
     display: none
