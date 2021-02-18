@@ -23,6 +23,11 @@ const getMarkets = async () => {
         const thisQuestion = await questionInstance(addr);
         const pubVar = await thisQuestion.methods.publicVariables().call();
 
+        let details = [...pubVar[3]];
+        details.push("Invalid");
+
+        pubVar[3] = [...details];
+
         const infoObject = {
           details: { ...pubVar, address: addr },
           questionInstance: thisQuestion,

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Select from "react-select";
-import makeAnimated from "react-select/animated";
 
 import TradeDetails from "./TradeDetails";
 import styles from "../../styles/Market.module.sass";
@@ -32,7 +31,10 @@ const Trade = ({ details, makeTransaction }) => {
   ];
 
   return (
-    <div className={styles.tradeContainer}>
+    <form
+      className={styles.tradeContainer}
+      onSubmit={() => makeTransaction(amount, etherUnit, whichOption)}
+    >
       <div className={styles.makeTradeContainer}>
         <div className={styles.makeTradeOptionsContainer}>
           <p className={styles.chooseOutcomeLabel}>Pick Outcome</p>
@@ -68,18 +70,16 @@ const Trade = ({ details, makeTransaction }) => {
             placeholder="0.00"
             value={amount ? amount : ""}
             onChange={(e) => setAmount(e.target.value)}
+            required
           />
         </div>
 
         <TradeDetails details={buyingDetails} />
       </div>
-
       <div className={styles.trade}>
-        <button onClick={() => makeTransaction(amount, etherUnit, whichOption)}>
-          Stake
-        </button>
+        <button type="submit">Stake</button>
       </div>
-    </div>
+    </form>
   );
 };
 
