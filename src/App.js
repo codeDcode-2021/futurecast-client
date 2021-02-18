@@ -8,7 +8,6 @@ import questionInstance from "./contracts/question";
 
 import Nav from "./components/Nav";
 import Market from "./components/Market";
-import Footer from "./components/Footer";
 import MarketGrid from "./components/MarketGrid";
 import HeroSection from "./components/HeroSection";
 import NewQuestion from "./components/NewQuestion";
@@ -40,6 +39,7 @@ const getMarkets = async () => {
 };
 
 const App = () => {
+  const [walletAddress, setWalletAddress] = useState(null);
   const [markets, setMarkets] = useState(null);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const App = () => {
 
   return (
     <>
-      <Nav />
+      <Nav setWalletAddress={setWalletAddress} />
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -56,7 +56,7 @@ const App = () => {
             <MarketGrid markets={markets} />
           </Route>
           <Route path="/market/:id">
-            <Market markets={markets} />
+            <Market markets={markets} walletAddress={walletAddress} />
           </Route>
           <Route path="/new-question">
             <NewQuestion />

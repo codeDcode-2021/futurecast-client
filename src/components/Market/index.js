@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Trade from "../Trade";
 import styles from "../../styles/Market.module.sass";
 
+import LoadingAnimation from "../LoadingAnimation";
+
 const parseDates = (unixTimeStamp) => {
   const date = new Date(unixTimeStamp * 1000);
 
@@ -18,32 +20,34 @@ const parseDates = (unixTimeStamp) => {
   return string;
 };
 
-const Market = ({ markets }) => {
+const phaseOptions = {
+  0: {
+    value: "Haven't started",
+    color: "black",
+  },
+  1: {
+    value: "Betting",
+    color: "#05b16a",
+  },
+  2: {
+    value: "Inactive",
+    color: "#e04545",
+  },
+  3: {
+    value: "Reporting",
+    color: "#ffc75f",
+  },
+  4: {
+    value: "Resolved",
+    color: "#0779e4",
+  },
+};
+
+const Market = ({ markets, walletAddress }) => {
+  const [isTransacting, setIsTransacting] = useState(false);
   const [details, setDetails] = useState(null);
   const { id } = useParams();
   let phase = 0;
-  const phaseOptions = {
-    0: {
-      value: "Haven't started",
-      color: "black",
-    },
-    1: {
-      value: "Betting",
-      color: "#05b16a",
-    },
-    2: {
-      value: "Inactive",
-      color: "#e04545",
-    },
-    3: {
-      value: "Reporting",
-      color: "#ffc75f",
-    },
-    4: {
-      value: "Resolved",
-      color: "#0779e4",
-    },
-  };
 
   useEffect(() => {
     if (markets) {
@@ -66,6 +70,36 @@ const Market = ({ markets }) => {
       phase = 3;
     }
   }
+
+  const questionStake = (amount, etherUnit, whichOption) => {
+    // Check wallet connect status
+    // Start LOADING STATE
+
+    let actualAmount = amount;
+    if (etherUnit === "1") {
+      actualAmount = actualAmount * 10 ** 18;
+    }
+
+    const questionInstance = details.questionInstance;
+
+    questionInstance.methods
+      .stake(whichOption)
+      .send({
+        from: walletAddress,
+        value: actualAmount,
+      })
+      .then((tx) => {
+        console.log(tx);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsTransacting(false);
+      });
+
+    setIsTransacting(true);
+
+    // END LOADING STATE
+  };
 
   return details ? (
     <div className={styles.market}>
@@ -102,7 +136,7 @@ const Market = ({ markets }) => {
           </p>
         </div>
       </div>
-      <Trade details={details} />
+      <Trade details={details} makeTransaction={questionStake} />
       {/* <div className={styles.marketDescription}>
         <p>Description:</p>
         <p>
@@ -114,7 +148,9 @@ const Market = ({ markets }) => {
       </div> */}
     </div>
   ) : (
-    <div></div>
+    <div className={styles.loadingAnimationContainer}>
+      <LoadingAnimation />
+    </div>
   );
 };
 

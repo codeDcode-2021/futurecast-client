@@ -1,12 +1,10 @@
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 import InputField from "../InputField";
 import styles from "../../styles/NewQuestion.module.sass";
-import DateTimePicker from "react-widgets/lib/DateTimePicker";
-import Moment from "moment";
-import momentLocalizer from "react-widgets-moment";
-import "react-widgets/dist/css/react-widgets.css";
-import { useState, useEffect } from "react";
 
 const NewQuestion = () => {
   const initialState = {
@@ -17,25 +15,28 @@ const NewQuestion = () => {
     eventEndDate: null,
   };
 
-  const [dateTime, setDateTime] = useState(null);
   const [data, setData] = useState(initialState);
-
-  Moment.locale("en");
-  momentLocalizer();
 
   const updateDetails = (e) => {
     const field = e.target.name;
+    const state = data;
 
     if (field.substr(0, field.length - 1) === "option") {
       const index = field.substr(-1);
-      initialState["options"][index] = e.target.value;
-    } else initialState[field] = e.target.value;
-    setData(initialState);
+      state["options"][index] = e.target.value;
+    } else state[field] = e.target.value;
+
+    setData({ ...state });
   };
 
   return (
     <div className={styles.newQuestionContainer}>
-      <form className={styles.newQuestion}>
+      <form
+        className={styles.newQuestion}
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <div className={styles.fieldContainer}>
           <h2 className={styles.heading}>
             <span role="img" aria-label="celebration emoji">
@@ -60,14 +61,16 @@ const NewQuestion = () => {
                   name={`option${id}`}
                   placeholder={`Option ${id + 1}`}
                   onChange={updateDetails}
+                  defaultValue={data.options[id]}
                   required
                 />
               </div>
             ) : (
-              <div className={styles.fieldContainer} key={id}>
+              <div className={styles.fieldContainer} key={-1}>
                 <InputField
                   name={`option${id}`}
-                  placeholder={data.options[id]}
+                  placeholder={`Option ${id + 1}`}
+                  defaultValue={data.options[id]}
                   disabled
                   required
                 />
@@ -75,8 +78,94 @@ const NewQuestion = () => {
             )
           )}
         </div>
-        <div className={styles.fieldContainer}>
-          <DateTimePicker value={dateTime} onChange={handleTimeChange} />
+        <div className={styles.addOption}>
+          <button
+            onClick={(e) => {
+              let state = data;
+              if (state.options.length < 6) {
+                state.options.pop();
+                state.options.push("");
+                state.options.push("Invalid");
+
+                setData({ ...state });
+              }
+            }}
+            type="button"
+          >
+            Add option
+          </button>
+          <button
+            onClick={(e) => {
+              let state = data;
+              if (state.options.length > 3) {
+                state.options.pop();
+                state.options.pop();
+                state.options.push("Invalid");
+
+                setData({ ...state });
+              }
+            }}
+            type="button"
+          >
+            Remove option
+          </button>
+        </div>
+        <div className={styles.optionContainer}>
+          <div className={styles.datePickerContainer}>
+            <label>Betting end date</label>
+            <div>
+              <DatePicker
+                selected={
+                  data.bettingEndDate
+                    ? new Date(data.bettingEndDate * 1000)
+                    : null
+                }
+                name="bettingEndTime"
+                onChange={(date) => {
+                  const state = data;
+                  state.bettingEndDate = Date.parse(date) / 1000;
+
+                  if (state.bettingEndDate <= state.eventEndDate) {
+                    setData({ ...state });
+                  } else {
+                    state.eventEndDate = null;
+                    setData({ ...state });
+                  }
+                }}
+                className={styles.customInput}
+                dateFormat="d / MM / yyyy    h:mm aa"
+                showTimeSelect
+                placeholderText="Choose Betting End Date"
+                required
+              />
+            </div>
+          </div>
+          <div className={styles.datePickerContainer}>
+            <label>Event end date</label>
+            <div>
+              <DatePicker
+                selected={
+                  data.eventEndDate ? new Date(data.eventEndDate * 1000) : null
+                }
+                onChange={(date) => {
+                  const state = data;
+                  state.eventEndDate = Date.parse(date) / 1000;
+                  setData({ ...state });
+                }}
+                minDate={
+                  data.bettingEndDate
+                    ? new Date(data.bettingEndDate * 1000)
+                    : null
+                }
+                disabled={!data.bettingEndDate}
+                className={styles.customInput}
+                dateFormat="d / MM / yyyy    h:mm aa"
+                showTimeSelect
+                placeholderText="Choose Betting End Date"
+                required
+              />
+            </div>
+          </div>
         </div>
         <div className={styles.fieldContainer}>
           <button type="submit" className={styles.addQuestionButton}>

@@ -2,8 +2,10 @@ import { useState } from "react";
 import styles from "../../styles/Market.module.sass";
 import TradeDetails from "./TradeDetails";
 
-const Trade = ({ details }) => {
+const Trade = ({ details, makeTransaction }) => {
   const [whichOption, setWhichOption] = useState(0);
+  const [amount, setAmount] = useState(null);
+  const [etherUnit, setEtherUnit] = useState(0);
 
   const buttonColorClasses = [
     styles.option1,
@@ -44,14 +46,26 @@ const Trade = ({ details }) => {
 
         <div className={styles.tradeValueInput}>
           <p className={styles.tradeValueInputLabel}>How much?</p>
-          <input type="number" step="0.01" placeholder="0.00" />
+          <select onChange={(e) => setEtherUnit(e.target.value)}>
+            <option value="0">Wei</option>
+            <option value="1">Ether</option>
+          </select>
+          <input
+            type="number"
+            step="0.01"
+            placeholder="0.00"
+            value={amount ? amount : ""}
+            onChange={(e) => setAmount(e.target.value)}
+          />
         </div>
 
         <TradeDetails details={buyingDetails} />
       </div>
 
       <div className={styles.trade}>
-        <button type="button">Stake</button>
+        <button onClick={() => makeTransaction(amount, etherUnit, whichOption)}>
+          Stake
+        </button>
       </div>
     </div>
   );

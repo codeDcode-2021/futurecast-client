@@ -1,20 +1,24 @@
 @import ./MediaQueries
 
 .newQuestionContainer
-  min-height: 90vh
+  min-height: 80vh
   width: 1296px
   margin: 0 auto
 
   display: grid
   place-items: center
 
-  transform: translateY(-12%)
 
   @include max-medium-width
     width: 688px
 
   @include max-tablet-width
     width: 320px
+
+  @include max-tablet-width
+    width: 90%
+
+
 
 .newQuestion
   width: 60%
@@ -23,11 +27,13 @@
   border-bottom-right-radius: 24px
 
   margin: 0 auto
-  margin-top: 64px
   padding: 48px
 
   @include max-medium-width
     width: 100%
+
+  @include max-tablet-width
+    padding: 32px
 
 .heading
   font-size: 22px
@@ -54,6 +60,29 @@
   @include max-tablet-width
     display: initial
 
+.addOption
+  margin: 24px 0 
+  button
+    background: none
+    outline: none
+    border: none
+
+    font-size: 14px
+    text-align: center
+
+    background-color: #05b16a
+    color: white
+    padding: 8px
+
+    cursor: pointer
+    border-radius: 8px
+
+  & :first-child
+    margin-right: 16px
+
+  & :last-child
+    background-color: #e04545
+
 .addQuestionButton
   background: none
   outline: none
@@ -69,3 +98,27 @@
 
   cursor: pointer
   border-radius: 8px
+
+.datePickerContainer
+  width: max-content
+  display: flex
+  flex-direction: column
+
+  margin: 16px 0
+
+  label
+    font-size: 14px
+
+.customInput
+  width: 92%
+  outline: none
+  border: none
+
+  font-size: 14px
+  padding: 0 auto
+  padding-top: 8px
+  padding-bottom: 4px
+
+  text-align: start
+
+  border-bottom: 1px solid #929292

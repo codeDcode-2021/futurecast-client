@@ -7,6 +7,7 @@ const InputField = ({
   required = "false",
   onChange,
   disabled = false,
+  defaultValue = "",
 }) => (
   <div className={styles.formGroup}>
     <input
@@ -18,6 +19,7 @@ const InputField = ({
       required={required}
       onChange={onChange}
       disabled={disabled}
+      defaultValue={defaultValue}
     />
     <label htmlFor={name} className={styles.formLabel} aria-disabled={true}>
       {placeholder}
