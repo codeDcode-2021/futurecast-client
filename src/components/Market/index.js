@@ -76,7 +76,7 @@ const Market = ({ markets, walletAddress }) => {
     // Start LOADING STATE
 
     let actualAmount = amount;
-    if (etherUnit === "1") {
+    if (etherUnit === 1) {
       actualAmount = actualAmount * 10 ** 18;
     }
 
@@ -97,11 +97,9 @@ const Market = ({ markets, walletAddress }) => {
       });
 
     setIsTransacting(true);
-
-    // END LOADING STATE
   };
 
-  return details ? (
+  return details && !isTransacting ? (
     <div className={styles.market}>
       <div className={styles.questionContainer}>
         <div className={styles.questionIconContainer}>
@@ -149,7 +147,10 @@ const Market = ({ markets, walletAddress }) => {
     </div>
   ) : (
     <div className={styles.loadingAnimationContainer}>
-      <LoadingAnimation />
+      <div className={styles.pleaseWait}>
+        <LoadingAnimation />
+        {isTransacting && <p>Please wait, while we process your transaction</p>}
+      </div>
     </div>
   );
 };

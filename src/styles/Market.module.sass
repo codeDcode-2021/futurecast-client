@@ -60,6 +60,7 @@
     grid-template-columns: 1fr 1fr
 
   @include max-tablet-width
+    place-items: center
     grid-template-columns: 1fr
 
   .card
@@ -68,6 +69,10 @@
     padding: 16px
 
     margin-right: 16px
+
+    @include max-tablet-width
+      margin: 0
+      width: 100%
 
     .heading
       font-size: 12px
@@ -275,3 +280,18 @@
   place-items: center
 
   height: 90vh
+
+.Select
+  margin: 12px
+
+.pleaseWait
+  display: grid
+  place-items: center
+
+  p
+    font-size: 16px
+    font-weight: 500
+
+    margin: 18px 0
+
+    text-align: center
