@@ -64,7 +64,7 @@ const App = () => {
             <Market markets={markets} walletAddress={walletAddress} />
           </Route>
           <Route path="/new-question">
-            <NewQuestion />
+            <NewQuestion walletAddress={walletAddress} />
           </Route>
         </Switch>
       </Router>

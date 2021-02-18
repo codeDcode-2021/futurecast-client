@@ -3,10 +3,15 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+import factory from "../../contracts/factory";
+
 import InputField from "../InputField";
 import styles from "../../styles/NewQuestion.module.sass";
+import LoadingAnimation from "../LoadingAnimation";
 
-const NewQuestion = () => {
+const NewQuestion = ({ walletAddress }) => {
+  const [creatingQuestion, setCreatingQuestion] = useState(false);
+
   const initialState = {
     question: "",
     options: ["", "", "Invalid"],
@@ -28,13 +33,35 @@ const NewQuestion = () => {
 
     setData({ ...state });
   };
+  console.log(factory.methods);
 
-  return (
+  const createNewQuestion = (e) => {
+    const state = { ...data };
+    state.options.pop();
+
+    factory.methods
+      .createQuestion(
+        state.question,
+        state.options,
+        state.bettingEndDate,
+        state.eventEndDate
+      )
+      .send({
+        from: walletAddress,
+      })
+      .then((tx) => console.log(tx))
+      .catch((err) => console.log(err));
+
+    setCreatingQuestion(true);
+  };
+
+  return !creatingQuestion && walletAddress ? (
     <div className={styles.newQuestionContainer}>
       <form
         className={styles.newQuestion}
         onSubmit={(e) => {
           e.preventDefault();
+          createNewQuestion(e);
         }}
       >
         <div className={styles.fieldContainer}>
@@ -173,6 +200,17 @@ const NewQuestion = () => {
           </button>
         </div>
       </form>
+    </div>
+  ) : (
+    <div className={styles.loadingAnimationContainer}>
+      <div className={styles.pleaseWait}>
+        <LoadingAnimation />
+        {!walletAddress ? (
+          <p>Please connect to a wallet.</p>
+        ) : (
+          creatingQuestion && <p>Please wait, while we create your question</p>
+        )}
+      </div>
     </div>
   );
 };
