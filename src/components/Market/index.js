@@ -76,7 +76,7 @@ const Market = ({ markets, walletAddress }) => {
     // Start LOADING STATE
 
     let actualAmount = amount;
-    if (etherUnit === "1") {
+    if (etherUnit === 1) {
       actualAmount = actualAmount * 10 ** 18;
     }
 

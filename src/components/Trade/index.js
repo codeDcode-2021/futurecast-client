@@ -1,6 +1,9 @@
 import { useState } from "react";
-import styles from "../../styles/Market.module.sass";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+
 import TradeDetails from "./TradeDetails";
+import styles from "../../styles/Market.module.sass";
 
 const Trade = ({ details, makeTransaction }) => {
   const [whichOption, setWhichOption] = useState(0);
@@ -21,6 +24,11 @@ const Trade = ({ details, makeTransaction }) => {
     { detailLabel: "Estimated Shares Bought", value: "0.00" },
     { detailLabel: "Maximum Winnings", value: "₹ 0.00" },
     { detailLabel: "Max Return on investment", value: "0.00 %" },
+  ];
+
+  const etherUnits = [
+    { value: 0, label: "Wei" },
+    { value: 1, label: "Ether" },
   ];
 
   return (
@@ -46,10 +54,14 @@ const Trade = ({ details, makeTransaction }) => {
 
         <div className={styles.tradeValueInput}>
           <p className={styles.tradeValueInputLabel}>How much?</p>
-          <select onChange={(e) => setEtherUnit(e.target.value)}>
-            <option value="0">Wei</option>
-            <option value="1">Ether</option>
-          </select>
+          <div className={styles.Select}>
+            <Select
+              defaultValue={etherUnits[etherUnit]}
+              value={etherUnits[etherUnit]}
+              options={etherUnits}
+              onChange={(unit) => setEtherUnit(unit.value)}
+            />
+          </div>
           <input
             type="number"
             step="0.01"
