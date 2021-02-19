@@ -10,16 +10,17 @@ const MarketItem = ({ market }) => {
           {` ${market["details"][0]}`}
         </p>
         <div className={styles.options}>
-          <p>Volume: ₹ 100,000</p>
+          <p>Volume: {market["details"]["total"]}</p>
           <div className={styles.voteOptions}>
-            <p className={styles.voteOption}>
-              {market["details"][3][0]}:
-              <span className={styles.voteValue}> 0.8</span>
-            </p>
-            <p className={styles.voteOption}>
-              {market["details"][3][1]}:
-              <span className={styles.voteValue}> 0.2</span>
-            </p>
+            {market["details"][3].map((detail, id) => (
+              <p className={styles.voteOption}>
+                {market["details"][3][id]}:
+                <span className={styles.voteValue}>
+                  {" "}
+                  {market["details"][2][0][id]}%
+                </span>
+              </p>
+            ))}
           </div>
         </div>
       </div>

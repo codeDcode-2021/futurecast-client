@@ -12,7 +12,7 @@
   font-size: 14px
 
   @include max-mobile-width
-    font-size: 12px
+    font-size: 14px
 
 .featured 
   box-shadow: 10px 10px 10px rgba(212, 255, 209, 0.609)
@@ -26,21 +26,25 @@
   margin-top: 16px
 
 .voteOptions
-  display: flex
+  display: grid
+  gap: 24px
 
-  align-items: center
+  margin-top: 16px 
+  grid-template-columns: 1fr 1fr
 
 .voteOption
   // box-shadow: 2px 2px 10px rgba(46, 54, 68, 0.1)
-
-  margin-right: 32px
-  margin-top: 16px 
-  // padding: 12px
 
   font-weight: 700
   font-size: 16px
 
   border-bottom-right-radius: 16px
+
+  @include max-medium-width
+    font-size: 15px
+
+  @include max-tablet-width
+    font-size: 14px
 
 .voteValue
   color: #6f11e9

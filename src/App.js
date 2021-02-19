@@ -28,6 +28,17 @@ const getMarkets = async () => {
 
         pubVar[3] = [...details];
 
+        let values = [...pubVar[2][0]];
+        let total = 0;
+
+        values.forEach((value) => (total += parseInt(value)));
+        let percentage = values.map((value) =>
+          total ? (value / total) * 100 : 0
+        );
+
+        pubVar[2] = [[...percentage], [...pubVar[2][1]]];
+        pubVar["total"] = total;
+
         const infoObject = {
           details: { ...pubVar, address: addr },
           questionInstance: thisQuestion,
@@ -53,7 +64,7 @@ const App = () => {
 
   return (
     <>
-      <Nav setWalletAddress={setWalletAddress} />
+      <Nav setWalletAddress={setWalletAddress} walletAddress={walletAddress} />
       <Router>
         <Switch>
           <Route path="/" exact>
