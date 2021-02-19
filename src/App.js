@@ -8,6 +8,7 @@ import Market from "./components/Market";
 import MarketGrid from "./components/MarketGrid";
 import HeroSection from "./components/HeroSection";
 import NewQuestion from "./components/NewQuestion";
+import {UserProfile} from "./components/UserProfile";
 import EnableWeb3 from "./components/EnableWeb3";
 
 const getMarkets = async (factory, questionInstance) => {
@@ -75,7 +76,7 @@ const App = () => {
         wallet={wallet}
         setWallet={setWallet}
       />
-      <Nav setWallet={setWallet} wallet={wallet} />
+      <Nav setWallet={setWallet} wallet={wallet} walletAddress={walletAddress}/>
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -87,6 +88,9 @@ const App = () => {
           </Route>
           <Route path="/new-question">
             <NewQuestion walletAddress={walletAddress} factory={factory} />
+          </Route>
+          <Route path="/profile">
+              <UserProfile walletAddress={walletAddress} markets={markets} />
           </Route>
         </Switch>
       </Router>

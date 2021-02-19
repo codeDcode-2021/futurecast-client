@@ -1,12 +1,13 @@
 import styles from "../../styles/Nav.module.sass";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
+import {MiniProfile} from "../UserProfile";
 import { useState } from "react";
 
 import metalogo from "../../assets/metamask.svg";
 import portislogo from "../../assets/portis.svg";
 
-const Nav = ({ setWallet, wallet }) => {
+const Nav = ({ setWallet, wallet,walletAddress }) => {
   const [open, setOpen] = useState(false);
 
   const onOpenModal = () => setOpen(true);
@@ -19,7 +20,7 @@ const Nav = ({ setWallet, wallet }) => {
         <span>her</span>
         <span>eum</span>
       </h1>
-      {!wallet && (
+      {!wallet ?(
         <ul className={styles.navOptions}>
           <button onClick={onOpenModal}>
             <li className={styles.signup}>Connect to Wallet</li>
@@ -69,7 +70,9 @@ const Nav = ({ setWallet, wallet }) => {
             </div>
           </Modal>
         </ul>
-      )}
+      ):(<>
+      <MiniProfile walletAddress={walletAddress}/>
+      </>)}
     </div>
   );
 };

@@ -8,6 +8,7 @@ const MarketItem = ({ market }) => {
         <p className={styles.question}>
           Q:
           {` ${market["details"][0]}`}
+          {` ${market["owner"]}`}
         </p>
         <div className={styles.options}>
           <p>Volume: {market["details"]["total"]}</p>
