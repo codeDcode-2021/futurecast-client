@@ -28,6 +28,9 @@
 
     padding: 16px
 
+    @include max-tablet-width
+      padding: 0
+
   .animationContainer
     width: 100%
     display: flex
@@ -51,7 +54,6 @@
 
       @include max-medium-width
         font-size: 28px
-
         text-align: center
 
   .detailsContainer

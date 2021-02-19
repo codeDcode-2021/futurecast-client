@@ -30,6 +30,9 @@
 
   text-transform: uppercase
 
+  @include max-medium-width
+    font-size: 16px
+
 .navOptions
   list-style: none
 
@@ -41,10 +44,6 @@
     outline: none
     border: none
     background: none
-
-.login
-  margin-right: 24px
-  cursor: pointer
 
 .btn:hover
     color: rgb(16, 187, 52)
@@ -63,11 +62,14 @@
   height: 56px
   width: 320px
 
+  @include max-mobile-width
+    width: 100%
+
 .btntxt
   height: 24px
   width: -moz-fit-content
   color: rgb(18, 20, 30)
-  font-size: 18px
+  font-size: 16px
   letter-spacing: 0px
   text-align: center
   line-height: 24px
@@ -81,6 +83,10 @@
   display: inline-block
 
 .signup
+  display: flex
+  align-items: center
+  justify-content: center
+
   font-size: 14px
   background-color: #262626
   color: #fff
@@ -90,9 +96,18 @@
 
   cursor: pointer
 
+  @include max-tablet-width
+    font-size: 12px
+
   .img
     width:24px
     height:24px
 
-  @include max-tablet-width
-    display: none
+    margin-right: 8px
+
+    @include max-tablet-width
+      margin-right: 0
+
+  span
+    @include max-tablet-width
+      display: none

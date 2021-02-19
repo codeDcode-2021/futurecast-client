@@ -1,7 +1,6 @@
 import styles from "../../styles/Nav.module.sass";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
-import { MiniProfile } from "../UserProfile";
 import { useEffect, useState } from "react";
 
 import metalogo from "../../assets/metamask.svg";
@@ -25,7 +24,7 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
         <span>her</span>
         <span>eum</span>
       </h1>
-      {!wallet ? (
+      {!walletAddress ? (
         <ul className={styles.navOptions}>
           <button onClick={onOpenModal}>
             <li className={styles.signup}>Connect to Wallet</li>
@@ -39,9 +38,6 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
             aria-describedby="a popup to connect crypto wallets to the app"
           >
             <div style={{ padding: "10px", textAlign: "center" }}>
-              <div style={{ marginBottom: "30px" }}>
-                <h1>EtherMarket</h1>
-              </div>
               <div style={{ marginBottom: "15px" }}>
                 <h4>Connect your wallet</h4>
               </div>
@@ -76,9 +72,19 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
           </Modal>
         </ul>
       ) : (
-        <>
-          <MiniProfile walletAddress={walletAddress} />
-        </>
+        <ul className={styles.navOptions}>
+          <li className={styles.signup}>
+            <img
+              className={styles.img}
+              src={wallet === 1 ? metalogo : portislogo}
+              alt={wallet === 1 ? "MetaMask" : "Portis"}
+            ></img>
+            <span>Connected to {wallet === 1 ? "MetaMask" : "Portis"}</span>
+          </li>
+          {/* <li>
+            <MiniProfile walletAddress={walletAddress} />
+          </li> */}
+        </ul>
       )}
     </div>
   );

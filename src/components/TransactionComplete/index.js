@@ -7,25 +7,28 @@ import CrossAnimation from "../../assets/animations/4970-unapproved-cross.json";
 
 const TransactionComplete = () => {
   const history = useHistory();
+  let response, details;
+  let defaultOptions;
 
-  if (!history.location.state) {
+  try {
+    response = history.location.state.response;
+    details = history.location.state.details;
+
+    defaultOptions = {
+      loop: false,
+      autoplay: true,
+      animationData: response.status ? CheckAnimation : CrossAnimation,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice",
+      },
+    };
+  } catch (e) {
     history.push({
       pathname: "/",
     });
   }
 
-  const { response, details } = history.location.state;
-
-  const defaultOptions = {
-    loop: false,
-    autoplay: true,
-    animationData: response.status ? CheckAnimation : CrossAnimation,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
-  return (
+  return history.location.state ? (
     <div className={styles.container}>
       <div>
         <div className={styles.animationContainer}>
@@ -65,6 +68,8 @@ const TransactionComplete = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
