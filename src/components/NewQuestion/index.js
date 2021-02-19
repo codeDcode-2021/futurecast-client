@@ -3,13 +3,11 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import factory from "../../contracts/factory";
-
 import InputField from "../InputField";
 import styles from "../../styles/NewQuestion.module.sass";
 import LoadingAnimation from "../LoadingAnimation";
 
-const NewQuestion = ({ walletAddress }) => {
+const NewQuestion = ({ walletAddress, factory }) => {
   const [creatingQuestion, setCreatingQuestion] = useState(false);
 
   const initialState = {
@@ -33,7 +31,6 @@ const NewQuestion = ({ walletAddress }) => {
 
     setData({ ...state });
   };
-  console.log(factory.methods);
 
   const createNewQuestion = (e) => {
     const state = { ...data };

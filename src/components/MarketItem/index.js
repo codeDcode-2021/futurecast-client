@@ -13,7 +13,7 @@ const MarketItem = ({ market }) => {
           <p>Volume: {market["details"]["total"]}</p>
           <div className={styles.voteOptions}>
             {market["details"][3].map((detail, id) => (
-              <p className={styles.voteOption}>
+              <p key={id} className={styles.voteOption}>
                 {market["details"][3][id]}:
                 <span className={styles.voteValue}>
                   {" "}

@@ -72,9 +72,6 @@ const Market = ({ markets, walletAddress }) => {
   }
 
   const questionStake = (amount, etherUnit, whichOption) => {
-    // Check wallet connect status
-    // Start LOADING STATE
-
     let actualAmount = amount;
     if (etherUnit === 1) {
       actualAmount = actualAmount * 10 ** 18;

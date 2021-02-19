@@ -3,16 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./styles/globals.sass";
 
-import factory from "./contracts/factory";
-import questionInstance from "./contracts/question";
-
 import Nav from "./components/Nav";
 import Market from "./components/Market";
 import MarketGrid from "./components/MarketGrid";
 import HeroSection from "./components/HeroSection";
 import NewQuestion from "./components/NewQuestion";
+import EnableWeb3 from "./components/EnableWeb3";
 
-const getMarkets = async () => {
+const getMarkets = async (factory, questionInstance) => {
   try {
     const questionAddresses = await factory.methods
       .giveQuestionAddresses()
@@ -33,7 +31,7 @@ const getMarkets = async () => {
 
         values.forEach((value) => (total += parseInt(value)));
         let percentage = values.map((value) =>
-          total ? (value / total) * 100 : 0
+          total ? parseFloat((value / total) * 100).toFixed(2) : 0
         );
 
         pubVar[2] = [[...percentage], [...pubVar[2][1]]];
@@ -55,16 +53,29 @@ const getMarkets = async () => {
 };
 
 const App = () => {
+  const [factory, setFactory] = useState(null);
+  const [questionInstance, setQuestionInstance] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
   const [markets, setMarkets] = useState(null);
+  const [wallet, setWallet] = useState(0);
 
   useEffect(() => {
-    getMarkets().then((markets) => setMarkets(markets));
-  }, []);
+    if (factory && questionInstance)
+      getMarkets(factory, questionInstance).then((markets) =>
+        setMarkets(markets)
+      );
+  }, [factory, questionInstance]);
 
   return (
     <>
-      <Nav setWalletAddress={setWalletAddress} walletAddress={walletAddress} />
+      <EnableWeb3
+        setFactory={setFactory}
+        setQuestionInstance={setQuestionInstance}
+        setWalletAddress={setWalletAddress}
+        wallet={wallet}
+        setWallet={setWallet}
+      />
+      <Nav setWallet={setWallet} wallet={wallet} />
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -75,7 +86,7 @@ const App = () => {
             <Market markets={markets} walletAddress={walletAddress} />
           </Route>
           <Route path="/new-question">
-            <NewQuestion walletAddress={walletAddress} />
+            <NewQuestion walletAddress={walletAddress} factory={factory} />
           </Route>
         </Switch>
       </Router>
