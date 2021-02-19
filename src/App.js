@@ -8,8 +8,9 @@ import Market from "./components/Market";
 import MarketGrid from "./components/MarketGrid";
 import HeroSection from "./components/HeroSection";
 import NewQuestion from "./components/NewQuestion";
-import {UserProfile} from "./components/UserProfile";
+import { UserProfile } from "./components/UserProfile";
 import EnableWeb3 from "./components/EnableWeb3";
+import TransactionComplete from "./components/TransactionComplete";
 
 const getMarkets = async (factory, questionInstance) => {
   try {
@@ -40,7 +41,6 @@ const getMarkets = async (factory, questionInstance) => {
 
         const infoObject = {
           details: { ...pubVar, address: addr },
-          questionInstance: thisQuestion,
         };
 
         return infoObject;
@@ -55,10 +55,12 @@ const getMarkets = async (factory, questionInstance) => {
 
 const App = () => {
   const [factory, setFactory] = useState(null);
+  const [markets, setMarkets] = useState(null);
   const [questionInstance, setQuestionInstance] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
-  const [markets, setMarkets] = useState(null);
+
   const [wallet, setWallet] = useState(0);
+  const [showWalletModal, setShowWalletModal] = useState(undefined);
 
   useEffect(() => {
     if (factory && questionInstance)
@@ -76,7 +78,12 @@ const App = () => {
         wallet={wallet}
         setWallet={setWallet}
       />
-      <Nav setWallet={setWallet} wallet={wallet} walletAddress={walletAddress}/>
+      <Nav
+        setWallet={setWallet}
+        wallet={wallet}
+        walletAddress={walletAddress}
+        setShowWalletModal={setShowWalletModal}
+      />
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -84,13 +91,21 @@ const App = () => {
             <MarketGrid markets={markets} />
           </Route>
           <Route path="/market/:id">
-            <Market markets={markets} walletAddress={walletAddress} />
+            <Market
+              questionInstance={questionInstance}
+              walletAddress={walletAddress}
+              showWalletModal={() => showWalletModal()}
+              markets={markets}
+            />
           </Route>
           <Route path="/new-question">
             <NewQuestion walletAddress={walletAddress} factory={factory} />
           </Route>
           <Route path="/profile">
-              <UserProfile walletAddress={walletAddress} markets={markets} />
+            <UserProfile walletAddress={walletAddress} markets={markets} />
+          </Route>
+          <Route path="/transaction">
+            <TransactionComplete />
           </Route>
         </Switch>
       </Router>

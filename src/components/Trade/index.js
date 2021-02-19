@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Select from "react-select";
 
-import TradeDetails from "./TradeDetails";
 import styles from "../../styles/Market.module.sass";
 
-const Trade = ({ details, makeTransaction }) => {
+const Trade = ({ details, makeTransaction, showWalletModal, wallet }) => {
   const [whichOption, setWhichOption] = useState(0);
   const [amount, setAmount] = useState(null);
   const [etherUnit, setEtherUnit] = useState(0);
@@ -18,13 +17,6 @@ const Trade = ({ details, makeTransaction }) => {
     styles.option6,
   ];
 
-  const buyingDetails = [
-    { detailLabel: "Your avg. price", value: "₹ 0.00" },
-    { detailLabel: "Estimated Shares Bought", value: "0.00" },
-    { detailLabel: "Maximum Winnings", value: "₹ 0.00" },
-    { detailLabel: "Max Return on investment", value: "0.00 %" },
-  ];
-
   const etherUnits = [
     { value: 0, label: "Wei" },
     { value: 1, label: "Ether" },
@@ -33,7 +25,12 @@ const Trade = ({ details, makeTransaction }) => {
   return (
     <form
       className={styles.tradeContainer}
-      onSubmit={() => makeTransaction(amount, etherUnit, whichOption)}
+      onSubmit={(e) => {
+        e.preventDefault();
+        wallet
+          ? makeTransaction(amount, etherUnit, whichOption)
+          : showWalletModal();
+      }}
     >
       <div className={styles.makeTradeContainer}>
         <div className={styles.makeTradeOptionsContainer}>
@@ -73,8 +70,6 @@ const Trade = ({ details, makeTransaction }) => {
             required
           />
         </div>
-
-        <TradeDetails details={buyingDetails} />
       </div>
       <div className={styles.trade}>
         <button type="submit">Stake</button>
