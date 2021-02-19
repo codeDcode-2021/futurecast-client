@@ -85,6 +85,12 @@ const Market = ({
 
     const thisQuestion = await questionInstance(id);
 
+    const data = {
+      question: details.details[0],
+      option: details.details[3][whichOption],
+      amount: `${etherUnit ? `${amount} ether` : `${amount} wei`}`,
+    };
+
     thisQuestion.methods
       .stake(whichOption)
       .send({
@@ -96,17 +102,16 @@ const Market = ({
           pathname: "/transaction",
           state: {
             response: tx,
-            code: 200,
+            details: data,
           },
         });
       })
       .catch((err) => {
-        console.log(err);
         history.push({
           pathname: "/transaction",
           state: {
-            response: { ...err },
-            code: 400,
+            response: { ...err, status: false, from: walletAddress, to: id },
+            details: data,
           },
         });
       });
