@@ -1,4 +1,5 @@
 import Lottie from "react-lottie";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import styles from "../../styles/TransactionComplete.module.sass";
@@ -65,6 +66,9 @@ const TransactionComplete = () => {
           <p>
             Amount:<span className={styles.value}>{details.amount}</span>
           </p>
+          <Link to="/">
+            <button className={styles.home}>Home</button>
+          </Link>
         </div>
       </div>
     </div>
