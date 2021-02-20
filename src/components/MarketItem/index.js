@@ -8,10 +8,10 @@ const MarketItem = ({ market }) => {
         <p className={styles.question}>
           Q:
           {` ${market["details"][0]}`}
-          {` ${market["owner"]}`}
+          {/* {` ${market["owner"]}`} */}
         </p>
         <div className={styles.options}>
-          <p>Volume: {market["details"]["total"]}</p>
+          <p>Volume: {market["details"]["total"]} ether</p>
           <div className={styles.voteOptions}>
             {market["details"][3].map((detail, id) => (
               <p key={id} className={styles.voteOption}>

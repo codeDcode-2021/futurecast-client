@@ -9,7 +9,7 @@
 
   padding: 32px
 
-  font-size: 14px
+  font-size: 16px
 
   @include max-mobile-width
     font-size: 14px
@@ -18,7 +18,7 @@
   box-shadow: 10px 10px 10px rgba(212, 255, 209, 0.609)
 
 .question
-  font-size: 600
+  font-weight: 600
 
   text-align: justify
 
@@ -33,13 +33,17 @@
   grid-template-columns: 1fr 1fr
 
 .voteOption
-  // box-shadow: 2px 2px 10px rgba(46, 54, 68, 0.1)
+  box-shadow: 2px 2px 10px rgba(46, 54, 68, 0.1)
 
-  font-weight: 700
-  font-size: 16px
+  font-weight: 500
+  font-size: 15px
+
+  // background: #e4e4e4
+  padding: 12px
+
+  border-bottom-right-radius: 16px
 
   @include max-medium-width
-    font-weight: 600
     font-size: 14px
 
   @include max-tablet-width

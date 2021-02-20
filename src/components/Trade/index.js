@@ -3,7 +3,13 @@ import Select from "react-select";
 
 import styles from "../../styles/Market.module.sass";
 
-const Trade = ({ details, makeTransaction, showWalletModal, wallet }) => {
+const Trade = ({
+  details,
+  makeTransaction,
+  showWalletModal,
+  wallet,
+  phase,
+}) => {
   const [whichOption, setWhichOption] = useState(0);
   const [amount, setAmount] = useState(null);
   const [etherUnit, setEtherUnit] = useState(0);
@@ -27,9 +33,11 @@ const Trade = ({ details, makeTransaction, showWalletModal, wallet }) => {
       className={styles.tradeContainer}
       onSubmit={(e) => {
         e.preventDefault();
-        wallet
-          ? makeTransaction(amount, etherUnit, whichOption)
-          : showWalletModal();
+        if (phase === 1) {
+          wallet
+            ? makeTransaction(amount, etherUnit, whichOption)
+            : showWalletModal();
+        }
       }}
     >
       <div className={styles.makeTradeContainer}>
@@ -67,12 +75,20 @@ const Trade = ({ details, makeTransaction, showWalletModal, wallet }) => {
             placeholder="0.00"
             value={amount ? amount : ""}
             onChange={(e) => setAmount(e.target.value)}
+            disabled={phase !== 1 ? true : false}
             required
           />
         </div>
       </div>
       <div className={styles.trade}>
-        <button type="submit">Stake</button>
+        <button
+          type="submit"
+          style={
+            phase !== 1 ? { background: "darkgrey" } : { background: "initial" }
+          }
+        >
+          Stake
+        </button>
       </div>
     </form>
   );
