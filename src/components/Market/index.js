@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Trade from "../Trade";
@@ -43,10 +43,16 @@ const phaseOptions = {
   },
 };
 
-const Market = ({ markets, walletAddress }) => {
+const Market = ({
+  markets,
+  questionInstance,
+  walletAddress,
+  showWalletModal,
+}) => {
   const [isTransacting, setIsTransacting] = useState(false);
   const [details, setDetails] = useState(null);
   const { id } = useParams();
+  const history = useHistory();
   let phase = 0;
 
   useEffect(() => {
@@ -71,26 +77,43 @@ const Market = ({ markets, walletAddress }) => {
     }
   }
 
-  const questionStake = (amount, etherUnit, whichOption) => {
+  const questionStake = async (amount, etherUnit, whichOption) => {
     let actualAmount = amount;
     if (etherUnit === 1) {
       actualAmount = actualAmount * 10 ** 18;
     }
 
-    const questionInstance = details.questionInstance;
+    const thisQuestion = await questionInstance(id);
 
-    questionInstance.methods
+    const data = {
+      question: details.details[0],
+      option: details.details[3][whichOption],
+      amount: `${etherUnit ? `${amount} ether` : `${amount} wei`}`,
+    };
+
+    thisQuestion.methods
       .stake(whichOption)
       .send({
         from: walletAddress,
         value: actualAmount,
       })
       .then((tx) => {
-        console.log(tx);
+        history.push({
+          pathname: "/transaction",
+          state: {
+            response: tx,
+            details: data,
+          },
+        });
       })
       .catch((err) => {
-        console.log(err);
-        setIsTransacting(false);
+        history.push({
+          pathname: "/transaction",
+          state: {
+            response: { ...err, status: false, from: walletAddress, to: id },
+            details: data,
+          },
+        });
       });
 
     setIsTransacting(true);
@@ -131,7 +154,12 @@ const Market = ({ markets, walletAddress }) => {
           </p>
         </div>
       </div>
-      <Trade details={details} makeTransaction={questionStake} />
+      <Trade
+        details={details}
+        makeTransaction={questionStake}
+        showWalletModal={showWalletModal}
+        wallet={walletAddress}
+      />
       {/* <div className={styles.marketDescription}>
         <p>Description:</p>
         <p>

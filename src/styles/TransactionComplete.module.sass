@@ -1,0 +1,99 @@
+@import ./MediaQueries
+
+.container
+  display: grid
+
+  width: 1296px
+  height: 100vh
+
+  display: flex
+
+  margin: 0 auto
+  margin-top: -10vh
+  padding-top: 10vh 
+
+  @include max-medium-width
+    width: 688px
+
+  @include max-tablet-width
+    width: 320px
+
+  & > div
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    margin-top: 64px
+
+    padding: 16px
+
+    @include max-tablet-width
+      padding: 0
+
+  .animationContainer
+    width: 100%
+    display: flex
+
+    align-items: center
+    margin-bottom: 32px
+
+    @include max-medium-width
+      flex-direction: column
+
+    & :first-child
+      margin-right: 24px
+
+      @include max-medium-width
+        margin: 0
+        margin-bottom: 16px
+
+    & :last-child
+      font-size: 36px
+      font-weight: 700
+
+      @include max-medium-width
+        font-size: 28px
+        text-align: center
+
+  .detailsContainer
+    width: 100%
+
+    padding-left: 156px
+
+    @include max-medium-width
+      padding: 0
+
+    p
+      width: 100%
+      font-size: 16px
+      font-weight: 400
+
+      margin: 8px 0
+
+      overflow-y: auto
+
+      .value
+        font-weight: 500
+        margin-left: 16px
+
+
+      @include max-medium-width
+        font-size: 14px
+      
+    .home
+      background: none
+      outline: none
+      border: none
+
+      font-family: "Montserrat"
+      font-size: 16px
+
+      background-color: #05b16a
+      color: white
+
+      border-radius: 8px
+      padding: 12px
+      margin-top: 16px
+
+      cursor: pointer
