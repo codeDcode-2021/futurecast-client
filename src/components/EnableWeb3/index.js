@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import Portis from "@portis/web3";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import info from "./info.json";
 
@@ -36,7 +36,7 @@ const EnableWeb3 = ({
       const provider = new Web3.providers.HttpProvider(providerURL);
       setWeb3(new Web3(provider));
     }
-  }, [wallet]);
+  }, [wallet, setWeb3]);
 
   useEffect(() => {
     if (web3 !== undefined) {
