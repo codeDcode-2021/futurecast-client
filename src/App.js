@@ -54,6 +54,7 @@ const getMarkets = async (factory, questionInstance) => {
 };
 
 const App = () => {
+  const [web3, setWeb3] = useState(undefined);
   const [factory, setFactory] = useState(null);
   const [markets, setMarkets] = useState(null);
   const [questionInstance, setQuestionInstance] = useState(null);
@@ -72,19 +73,21 @@ const App = () => {
   return (
     <>
       <EnableWeb3
+        web3={web3}
+        setWeb3={setWeb3}
         setFactory={setFactory}
         setQuestionInstance={setQuestionInstance}
         setWalletAddress={setWalletAddress}
         wallet={wallet}
         setWallet={setWallet}
       />
-      <Nav
-        setWallet={setWallet}
-        wallet={wallet}
-        walletAddress={walletAddress}
-        setShowWalletModal={setShowWalletModal}
-      />
       <Router>
+        <Nav
+          setWallet={setWallet}
+          wallet={wallet}
+          walletAddress={walletAddress}
+          setShowWalletModal={setShowWalletModal}
+        />
         <Switch>
           <Route path="/" exact>
             <HeroSection />

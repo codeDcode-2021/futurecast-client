@@ -100,12 +100,33 @@
     font-size: 12px
 
   .img
-    width:24px
-    height:24px
-
-    margin-right: 8px
+    width: 24px
+    height: 24px
 
     @include max-tablet-width
+      width: 18px
+      height: 18px
+
+      display: initial
+      margin-right: 0
+
+  .emoji
+    display: grid
+    place-items: center
+    width: 24px
+    height: 24px
+
+    font-size: 18px
+
+    margin-right: 6px
+
+    @include max-tablet-width
+      width: 18px
+      height: 18px
+
+      font-size: 14px
+
+      display: initial
       margin-right: 0
 
   span

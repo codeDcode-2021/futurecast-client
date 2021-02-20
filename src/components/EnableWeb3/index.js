@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import Portis from "@portis/web3";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import info from "./info.json";
 
@@ -16,14 +16,14 @@ const questionInstance = (web3) => {
 };
 
 const EnableWeb3 = ({
+  web3,
   wallet,
+  setWeb3,
   setWallet,
   setWalletAddress,
   setFactory,
   setQuestionInstance,
 }) => {
-  const [web3, setWeb3] = useState(undefined);
-
   useEffect(() => {
     const providerURL =
       "https://kovan.infura.io/v3/19b85f951b5a4440923fa8f61eb27245";
@@ -36,7 +36,7 @@ const EnableWeb3 = ({
       const provider = new Web3.providers.HttpProvider(providerURL);
       setWeb3(new Web3(provider));
     }
-  }, [wallet]);
+  }, [wallet, setWeb3]);
 
   useEffect(() => {
     if (web3 !== undefined) {
