@@ -93,7 +93,7 @@ const App = () => {
         <Switch>
           <Route path="/" exact>
             <HeroSection />
-            <MarketGrid markets={markets} />
+            <MarketGrid markets={markets} text="Popular Markets" />
           </Route>
           <Route path="/market/:id">
             <Market

@@ -81,12 +81,7 @@ const Trade = ({
         </div>
       </div>
       <div className={styles.trade}>
-        <button
-          type="submit"
-          style={
-            phase !== 1 ? { background: "darkgrey" } : { background: "initial" }
-          }
-        >
+        <button type="submit" background={phase !== 1 && "darkgrey"}>
           Stake
         </button>
       </div>

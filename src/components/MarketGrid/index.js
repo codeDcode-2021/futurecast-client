@@ -1,10 +1,10 @@
 import MarketItem from "../MarketItem";
 import styles from "../../styles/MarketGrid.module.sass";
 
-const MarketGrid = ({ markets }) => {
+const MarketGrid = ({ markets, text }) => {
   return (
     <div className={styles.container}>
-      <h4 className={styles.marketHeading}>Popular Markets:</h4>
+      <h4 className={styles.marketHeading}>{text}:</h4>
       <>
         {markets &&
           markets.map((market, id) => (
