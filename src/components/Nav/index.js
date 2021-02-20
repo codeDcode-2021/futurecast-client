@@ -89,17 +89,16 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
             </Link>
           </li>
           <li>
-            <div className={styles.signup}>
-              <img
-                className={styles.img}
-                src={wallet === 1 ? metalogo : portislogo}
-                alt={wallet === 1 ? "MetaMask" : "Portis"}
-              ></img>
-            </div>
+            <Link to="/profile">
+              <div className={styles.signup}>
+                <img
+                  className={styles.img}
+                  src={wallet === 1 ? metalogo : portislogo}
+                  alt={wallet === 1 ? "MetaMask" : "Portis"}
+                ></img>
+              </div>
+            </Link>
           </li>
-          {/* <li>
-            <MiniProfile walletAddress={walletAddress} />
-          </li> */}
         </ul>
       ) : (
         <ul className={styles.navOptions}>
