@@ -37,7 +37,9 @@ const getMarkets = async (factory, questionInstance) => {
         );
 
         pubVar[2] = [[...percentage], [...pubVar[2][1]]];
-        pubVar["total"] = total;
+        pubVar["total"] = total
+          ? parseFloat(total / 10 ** 18).toFixed(3)
+          : total;
 
         const infoObject = {
           details: { ...pubVar, address: addr },

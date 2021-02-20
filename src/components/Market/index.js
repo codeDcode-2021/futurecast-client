@@ -83,42 +83,44 @@ const Market = ({
       actualAmount = actualAmount * 10 ** 18;
     }
 
-    const thisQuestion = await questionInstance(id);
+    if (phase === 1) {
+      const thisQuestion = await questionInstance(id);
 
-    const data = {
-      question: details.details[0],
-      option: details.details[3][whichOption],
-      amount: `${etherUnit ? `${amount} ether` : `${amount} wei`}`,
-    };
+      const data = {
+        question: details.details[0],
+        option: details.details[3][whichOption],
+        amount: `${etherUnit ? `${amount} ether` : `${amount} wei`}`,
+      };
 
-    thisQuestion.methods
-      .stake(whichOption)
-      .send({
-        from: walletAddress,
-        value: actualAmount,
-      })
-      .then((tx) => {
-        history.push({
-          pathname: "/transaction",
-          state: {
-            newQuestion: false,
-            response: tx,
-            details: data,
-          },
+      thisQuestion.methods
+        .stake(whichOption)
+        .send({
+          from: walletAddress,
+          value: actualAmount,
+        })
+        .then((tx) => {
+          history.push({
+            pathname: "/transaction",
+            state: {
+              newQuestion: false,
+              response: tx,
+              details: data,
+            },
+          });
+        })
+        .catch((err) => {
+          history.push({
+            pathname: "/transaction",
+            state: {
+              newQuestion: false,
+              response: { ...err, status: false, from: walletAddress, to: id },
+              details: data,
+            },
+          });
         });
-      })
-      .catch((err) => {
-        history.push({
-          pathname: "/transaction",
-          state: {
-            newQuestion: false,
-            response: { ...err, status: false, from: walletAddress, to: id },
-            details: data,
-          },
-        });
-      });
 
-    setIsTransacting(true);
+      setIsTransacting(true);
+    }
   };
 
   return details && !isTransacting ? (
@@ -161,6 +163,7 @@ const Market = ({
         makeTransaction={questionStake}
         showWalletModal={showWalletModal}
         wallet={walletAddress}
+        phase={phase}
       />
       {/* <div className={styles.marketDescription}>
         <p>Description:</p>
