@@ -101,6 +101,7 @@ const Market = ({
         history.push({
           pathname: "/transaction",
           state: {
+            newQuestion: false,
             response: tx,
             details: data,
           },
@@ -110,6 +111,7 @@ const Market = ({
         history.push({
           pathname: "/transaction",
           state: {
+            newQuestion: false,
             response: { ...err, status: false, from: walletAddress, to: id },
             details: data,
           },

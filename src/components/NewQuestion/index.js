@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import { useHistory } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -9,6 +10,7 @@ import LoadingAnimation from "../LoadingAnimation";
 
 const NewQuestion = ({ walletAddress, factory }) => {
   const [creatingQuestion, setCreatingQuestion] = useState(false);
+  const history = useHistory();
 
   const initialState = {
     question: "",
@@ -46,8 +48,26 @@ const NewQuestion = ({ walletAddress, factory }) => {
       .send({
         from: walletAddress,
       })
-      .then((tx) => console.log(tx))
-      .catch((err) => console.log(err));
+      .then((tx) =>
+        history.push({
+          pathname: "/transaction",
+          state: {
+            newQuestion: true,
+            response: tx,
+            details: state,
+          },
+        })
+      )
+      .catch((err) =>
+        history.push({
+          pathname: "/transaction",
+          state: {
+            newQuestion: true,
+            response: { ...err, status: false, from: walletAddress },
+            details: state,
+          },
+        })
+      );
 
     setCreatingQuestion(true);
   };
