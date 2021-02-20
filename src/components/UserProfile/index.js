@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styles from "../../styles/UserProfile.module.sass";
+import LoadingAnimation from "../LoadingAnimation";
+import MarketGrid from "../MarketGrid";
 
 const info = require("../EnableWeb3/info.json");
 
@@ -20,35 +23,14 @@ const mes = async (walletAddress, question, marketaddress) => {
 
 export const UserProfile = ({ walletAddress, markets, factory, web3 }) => {
   const [balance, setBalance] = useState(0);
-  const [myRecents, setMyRecents] = useState([]);
+  const [myRecents, setMyRecents] = useState(null);
+  const history = useHistory();
 
-  // const [addressList, setAddressList] = useState([]);
-
-  useEffect(() => {
-    console.log(myRecents);
-  }, [myRecents]);
-
-  // if (
-  //   web3 !== undefined &&
-  //   walletAddress !== undefined &&
-  //   walletAddress !== null
-  // ) {
-  //   const initBal = async () => {
-  //     return await web3.eth.getBalance(walletAddress);
-  //   };
-  //   initBal().then((response) => {
-  //     console.log(response);
-  //     // setBalance(parseInt(response));
-  //   });
-
-  //   const getAllAddress = async () => {
-  //     return await factory.methods.giveQuestionAddresses().call();
-  //   };
-  //   getAllAddress().then((res) => {
-  //     console.log(res);
-  //     // setAddressList(res);
-  //   });
-  // }
+  if (!walletAddress) {
+    history.push({
+      pathname: "/",
+    });
+  }
 
   useEffect(() => {
     if (walletAddress) {
@@ -60,51 +42,73 @@ export const UserProfile = ({ walletAddress, markets, factory, web3 }) => {
 
   useEffect(() => {
     if (markets && walletAddress) {
-      markets.forEach((item) => {
-        // console.log(item.details.address);
+      let transactionDetails = {};
+      const marketAddresses = [];
+      markets.forEach((item, id) => {
         const question = new web3.eth.Contract(
           info.questionInterface,
           item.details.address
         );
+
         mes(walletAddress, question, item.details.address)
           .then((obj) => {
-            let amount = [];
             obj.forEach((item) => {
-              // console.log(item);
-              amount[0] = item.address;
-              const optid = parseInt(item.returnValues._optionId) + 1;
-              if (amount[optid] === undefined) {
-                amount[optid] = parseInt(item.returnValues._amount);
-              } else {
-                amount[optid] += parseInt(item.returnValues._amount);
+              const { _amount, _market, _optionId } = { ...item.returnValues };
+
+              if (!transactionDetails[_market]) {
+                marketAddresses.push(_market);
+                transactionDetails[_market] = {};
               }
+
+              if (!transactionDetails[_market][_optionId])
+                transactionDetails[_market][_optionId] = parseInt(_amount);
+              else transactionDetails[_market][_optionId] += parseInt(_amount);
             });
-            // console.log(amount);
-            if (amount.length !== 0) {
-              // console.log(amount);
-              setMyRecents([...myRecents, amount]);
+            return transactionDetails;
+          })
+          .then((transactionDetails) => {
+            if (id === markets.length - 1) {
+              const recentMarkets = markets.filter((market) => {
+                const marketAddresses = Object.keys(transactionDetails);
+                for (let i = 0; i < marketAddresses.length; i++) {
+                  if (market.details.address === marketAddresses[i]) {
+                    market.details["options"] =
+                      transactionDetails[marketAddresses[i]];
+                    return true;
+                  }
+                }
+                return false;
+              });
+              setMyRecents([...recentMarkets]);
             }
           })
           .catch((err) => console.log(err));
       });
     }
-  }, [markets, walletAddress]);
+  }, [markets, walletAddress, web3]);
 
   return walletAddress ? (
     <>
-      <div>
+      <div className={styles.container}>
+        <h2>Dashboard</h2>
         <div>
-          <h2>Dashboard</h2>
-          <div>Current Address :{walletAddress}</div>
-          <div>Current balance :{balance}</div>
-          <br />
-          <h4>Recent activities</h4>
-          <b />
+          <p>Wallet Address: {walletAddress}</p>
+          <p>
+            Current balance: {parseFloat(balance / 10 ** 18).toFixed(3)} ether
+          </p>
         </div>
+        <br />
+        <b />
       </div>
+      <MarketGrid markets={myRecents} text="Your recent transactions" />
     </>
   ) : (
-    <p>Please connect to a wallet.</p>
+    <div className={styles.loadingAnimationContainer}>
+      <div className={styles.pleaseWait}>
+        <LoadingAnimation />
+        <p>Please connect to a wallet.</p>
+      </div>
+    </div>
   );
 };
 
