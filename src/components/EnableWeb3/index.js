@@ -25,8 +25,7 @@ const EnableWeb3 = ({
   setQuestionInstance,
 }) => {
   useEffect(() => {
-    const providerURL =
-      "https://kovan.infura.io/v3/19b85f951b5a4440923fa8f61eb27245";
+    const providerURL = "https://rpc-mumbai.matic.today/";
 
     if (wallet === 1 && window.web3 !== undefined) {
       setWeb3(new Web3(window.ethereum));
