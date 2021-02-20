@@ -1,28 +1,41 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/UserProfile.module.sass";
 
-export const UserProfile = ({ walletAddress, markets, factory, web3 }) => {
-  console.log("Current account address: ", walletAddress);
-
-  const initBal = web3.eth.getBalance(walletAddress);
-  console.log("Account balance: ", initBal);
-
+export const UserProfile = ({ walletAddress, factory, web3 }) => {
+  const [balance, setBalance] = useState(0);
   const [addressList, setAddressList] = useState([]);
 
-  let res = null;
-  const something = async () => {
-    res = await factory.methods.giveQuestionAddresses().call();
-  };
+  if (
+    web3 !== undefined &&
+    walletAddress !== undefined &&
+    walletAddress !== null
+  ) {
+    console.log("Current account address: ", walletAddress);
 
-  useEffect(() => {
-    console.log(res);
-  }, [res]);
+    const initBal = async () => {
+      return await web3.eth.getBalance(walletAddress);
+    };
+    initBal().then((response) => {
+      console.log(response);
+      // setBalance(parseInt(response));
+    });
+
+    const getAllAddress = async () => {
+      return await factory.methods.giveQuestionAddresses().call();
+    };
+    getAllAddress().then((res) => {
+      console.log(res);
+      // setAddressList(res);
+    });
+  }
 
   return walletAddress ? (
     <>
       <div>
         <div>
           <h2>Dashboard</h2>
+          <div>Current Address :{walletAddress}</div>
+          <div>Current balance :{balance}</div>
         </div>
       </div>
     </>

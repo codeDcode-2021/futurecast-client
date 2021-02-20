@@ -105,7 +105,12 @@ const App = () => {
             <NewQuestion walletAddress={walletAddress} factory={factory} />
           </Route>
           <Route path="/profile">
-            <UserProfile walletAddress={walletAddress} markets={markets} factory={factory} />
+            <UserProfile
+              walletAddress={walletAddress}
+              markets={markets}
+              factory={factory}
+              web3={web3}
+            />
           </Route>
           <Route path="/transaction">
             <TransactionComplete />
