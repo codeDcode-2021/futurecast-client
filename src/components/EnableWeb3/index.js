@@ -16,14 +16,14 @@ const questionInstance = (web3) => {
 };
 
 const EnableWeb3 = ({
+  web3,
   wallet,
+  setWeb3,
   setWallet,
   setWalletAddress,
   setFactory,
   setQuestionInstance,
 }) => {
-  const [web3, setWeb3] = useState(undefined);
-
   useEffect(() => {
     const providerURL =
       "https://kovan.infura.io/v3/19b85f951b5a4440923fa8f61eb27245";
