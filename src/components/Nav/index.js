@@ -1,10 +1,12 @@
-import styles from "../../styles/Nav.module.sass";
+import { Link } from "react-router-dom";
 import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
 import { useEffect, useState } from "react";
+import { Modal } from "react-responsive-modal";
+import styles from "../../styles/Nav.module.sass";
 
 import metalogo from "../../assets/metamask.svg";
 import portislogo from "../../assets/portis.svg";
+import LoadingAnimation from "../LoadingAnimation";
 
 const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
   const [open, setOpen] = useState(false);
@@ -24,11 +26,16 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
         <span>her</span>
         <span>eum</span>
       </h1>
-      {!walletAddress ? (
+      {!wallet ? (
         <ul className={styles.navOptions}>
-          <button onClick={onOpenModal}>
-            <li className={styles.signup}>Connect to Wallet</li>
-          </button>
+          <li>
+            <button onClick={onOpenModal}>
+              <div className={styles.signup}>
+                <span className={styles.emoji}>👛</span>
+                <span>Connect to Wallet</span>
+              </div>
+            </button>
+          </li>
           <Modal
             open={open}
             onClose={onCloseModal}
@@ -71,19 +78,36 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
             </div>
           </Modal>
         </ul>
-      ) : (
+      ) : walletAddress ? (
         <ul className={styles.navOptions}>
-          <li className={styles.signup}>
-            <img
-              className={styles.img}
-              src={wallet === 1 ? metalogo : portislogo}
-              alt={wallet === 1 ? "MetaMask" : "Portis"}
-            ></img>
-            <span>Connected to {wallet === 1 ? "MetaMask" : "Portis"}</span>
+          <li>
+            <Link to="/new-question">
+              <div className={styles.signup} style={{ marginRight: "8px" }}>
+                <span className={styles.emoji}>➕</span>
+                <span>Add Question</span>
+              </div>
+            </Link>
+          </li>
+          <li>
+            <div className={styles.signup}>
+              <img
+                className={styles.img}
+                src={wallet === 1 ? metalogo : portislogo}
+                alt={wallet === 1 ? "MetaMask" : "Portis"}
+              ></img>
+            </div>
           </li>
           {/* <li>
             <MiniProfile walletAddress={walletAddress} />
           </li> */}
+        </ul>
+      ) : (
+        <ul className={styles.navOptions}>
+          <li>
+            <div className={styles.signup}>
+              <LoadingAnimation height="24px" color="white" />
+            </div>
+          </li>
         </ul>
       )}
     </div>

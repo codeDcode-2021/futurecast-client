@@ -176,6 +176,9 @@ const NewQuestion = ({ walletAddress, factory }) => {
                     setData({ ...state });
                   }
                 }}
+                minDate={
+                  data.startDate ? new Date(data.startDate * 1000) : null
+                }
                 className={styles.customInput}
                 dateFormat="d / MM / yyyy    h:mm aa"
                 showTimeSelect

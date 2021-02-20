@@ -8,7 +8,7 @@ const Animate = keyframes`
         height: 0;
     }
     50%{
-        height: 40px;
+        height: 100%;
     }
     100%{
         height: 0px;    
@@ -22,14 +22,14 @@ const Wrapper = styled.div`
 
   width: min-content;
 
-  height: 40px;
+  height: ${(props) => (props.height ? props.height : "40px")};
 
   .element {
     width: 6px;
-    height: 40px;
+    height: 100%;
     border-radius: 10px;
 
-    background: black;
+    background: ${(props) => (props.color ? props.color : "black")};
     margin: 3px;
 
     animation: ${Animate} 0.6s infinite;
@@ -46,9 +46,9 @@ const Wrapper = styled.div`
 // --> Styled components end <--
 
 // Functional component for Loading Animation
-const LoadingAnimation = () => {
+const LoadingAnimation = ({ height, color }) => {
   return (
-    <Wrapper>
+    <Wrapper height={height} color={color}>
       <div className="element"></div>
       <div className="element"></div>
       <div className="element"></div>

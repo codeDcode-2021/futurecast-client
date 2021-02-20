@@ -78,13 +78,13 @@ const App = () => {
         wallet={wallet}
         setWallet={setWallet}
       />
-      <Nav
-        setWallet={setWallet}
-        wallet={wallet}
-        walletAddress={walletAddress}
-        setShowWalletModal={setShowWalletModal}
-      />
       <Router>
+        <Nav
+          setWallet={setWallet}
+          wallet={wallet}
+          walletAddress={walletAddress}
+          setShowWalletModal={setShowWalletModal}
+        />
         <Switch>
           <Route path="/" exact>
             <HeroSection />
