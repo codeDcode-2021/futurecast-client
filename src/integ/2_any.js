@@ -62,7 +62,7 @@ const deploy = async()=>{
     
     // return process.exit(0);
       }catch(e){
-        console.log("error here :(")
+        console.log("error here :(");
       }})
 };
   
