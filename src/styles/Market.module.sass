@@ -129,7 +129,7 @@
         width: 80%
         margin: 12px auto
 
-        & *
+        & button
           outline: none
           border: none
           background: none
@@ -147,26 +147,32 @@
 
           cursor: pointer
 
+          span
+            color: #3b3b3bc4
+
           @include max-tablet-width
             font-size: 14px
 
           @include max-mobile-width
             font-size: 12px
 
-        & :first-child
-          margin-right: 16px
-
         .option1
           background-color: #05b16a
           color: white
+          span
+            color: #ffffffc4
 
         .option2
           background-color: #2746d1
           color: white
+          span
+            color: #ffffffc4
 
         .option3
           background-color: #845ec2
           color: white
+          span
+            color: #ffffffc4
 
         .option4
           background-color: #ffc75f
@@ -175,10 +181,14 @@
         .option5
           background-color: #0779e4
           color: white
+          span
+            color: #ffffffc4
 
         .option6
           background-color: #e04545
           color: white
+          span
+            color: #ffffffc4
 
         @include max-tablet-width
           width: 90%

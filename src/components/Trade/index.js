@@ -60,6 +60,7 @@ const Trade = ({
                 onClick={() => setWhichOption(id)}
               >
                 {option}
+                <span>{` - ${details.details[2][0][id]}%`}</span>
               </button>
             ))}
           </div>
@@ -87,7 +88,7 @@ const Trade = ({
         </div>
         {userHistory.length ? (
           <>
-            <p>Previous bets:</p>
+            <p>Your stakes:</p>
             <TradeDetails details={userHistory} />
           </>
         ) : (
