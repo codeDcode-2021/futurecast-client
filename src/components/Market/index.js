@@ -48,12 +48,30 @@ const Market = ({
   questionInstance,
   walletAddress,
   showWalletModal,
+  myRecents,
 }) => {
   const [isTransacting, setIsTransacting] = useState(false);
   const [details, setDetails] = useState(null);
   const { id } = useParams();
   const history = useHistory();
   let phase = 0;
+
+  let userHistory = [];
+
+  if (myRecents && details) {
+    if (myRecents[id]) {
+      const data = myRecents[id];
+      userHistory = Object.keys(data).map((id) => {
+        const detail = {
+          label: details.details[3][id],
+          value: data[id],
+        };
+        return detail;
+      });
+    }
+  }
+
+  console.log(userHistory);
 
   useEffect(() => {
     if (markets) {
@@ -263,6 +281,7 @@ const Market = ({
         showWalletModal={showWalletModal}
         wallet={walletAddress}
         phase={phase}
+        userHistory={userHistory}
       />
       {/* <div className={styles.marketDescription}>
         <p>Description:</p>

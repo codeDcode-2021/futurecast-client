@@ -21,11 +21,12 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
 
   return (
     <div className={styles.nav}>
-      <h1 className={styles.logo}>
-        <span>Et</span>
-        <span>her</span>
-        <span>eum</span>
-      </h1>
+      <Link to="/">
+        <h1 className={styles.logo}>
+          <span>Se</span>
+          <span>er</span>
+        </h1>
+      </Link>
       {!wallet ? (
         <ul className={styles.navOptions}>
           <li>

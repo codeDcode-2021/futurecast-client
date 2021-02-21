@@ -215,7 +215,7 @@
     .tradeDetails
       .tradeDetail
         display: flex
-        font-size: 14px
+        font-size: 16px
         font-weight: 500
 
         margin: 4px auto
@@ -226,6 +226,9 @@
         & :last-child
           flex: 28%
           text-align: end
+
+        @include max-mobile-width
+          font-size: 14px
 
 
   .trade

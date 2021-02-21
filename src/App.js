@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./styles/globals.sass";
 
+import info from "./components/EnableWeb3/info.json";
+
 import Nav from "./components/Nav";
 import Market from "./components/Market";
 import MarketGrid from "./components/MarketGrid";
@@ -55,15 +57,29 @@ const getMarkets = async (factory, questionInstance) => {
   }
 };
 
+const mes = async (walletAddress, question, marketaddress) => {
+  return await question.getPastEvents("staked", {
+    filter: {
+      _market: [marketaddress],
+      _user: [walletAddress],
+    },
+    fromBlock: "10764030",
+    toBlock: "latest",
+  });
+};
+
 const App = () => {
   const [web3, setWeb3] = useState(undefined);
   const [factory, setFactory] = useState(null);
   const [markets, setMarkets] = useState(null);
   const [questionInstance, setQuestionInstance] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
+  const [myRecents, setMyRecents] = useState(null);
 
   const [wallet, setWallet] = useState(0);
   const [showWalletModal, setShowWalletModal] = useState(undefined);
+
+  useEffect(() => {});
 
   useEffect(() => {
     if (factory && questionInstance)
@@ -71,6 +87,43 @@ const App = () => {
         setMarkets(markets)
       );
   }, [factory, questionInstance]);
+
+  useEffect(() => {
+    if (markets && walletAddress) {
+      let transactionDetails = {};
+      const marketAddresses = [];
+      markets.forEach((item, id) => {
+        const question = new web3.eth.Contract(
+          info.questionInterface,
+          item.details.address
+        );
+
+        mes(walletAddress, question, item.details.address)
+          .then((obj) => {
+            obj.forEach((item) => {
+              const { _amount, _market, _optionId } = { ...item.returnValues };
+              const { address } = { ...item };
+
+              if (!transactionDetails[address]) {
+                marketAddresses.push(_market);
+                transactionDetails[address] = {};
+              }
+
+              if (!transactionDetails[address][_optionId])
+                transactionDetails[address][_optionId] = parseInt(_amount);
+              else transactionDetails[address][_optionId] += parseInt(_amount);
+            });
+            return transactionDetails;
+          })
+          .then((transactionDetails) => {
+            if (id === markets.length - 1) {
+              setMyRecents({ ...transactionDetails });
+            }
+          })
+          .catch((err) => console.log(err));
+      });
+    }
+  }, [markets, walletAddress, web3]);
 
   return (
     <>
@@ -101,6 +154,7 @@ const App = () => {
               walletAddress={walletAddress}
               showWalletModal={() => showWalletModal()}
               markets={markets}
+              myRecents={myRecents}
             />
           </Route>
           <Route path="/new-question">
@@ -109,8 +163,8 @@ const App = () => {
           <Route path="/profile">
             <UserProfile
               walletAddress={walletAddress}
+              recents={myRecents}
               markets={markets}
-              factory={factory}
               web3={web3}
             />
           </Route>
