@@ -138,8 +138,6 @@ const Market = ({
     } else if (phase === 3) {
       const thisQuestion = await questionInstance(id);
 
-      console.log(actualAmount + phase);
-
       const data = {
         question: details.details[0],
         option: details.details[3][whichOption],
