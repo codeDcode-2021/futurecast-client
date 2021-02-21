@@ -16,7 +16,7 @@ const mes = async (walletAddress, question, marketaddress) => {
       _market: [marketaddress],
       _user: [walletAddress],
     },
-    fromBlock: "23400000",
+    fromBlock: "10764030",
     toBlock: "latest",
   });
 };
@@ -54,15 +54,16 @@ export const UserProfile = ({ walletAddress, markets, factory, web3 }) => {
           .then((obj) => {
             obj.forEach((item) => {
               const { _amount, _market, _optionId } = { ...item.returnValues };
+              const { address } = { ...item };
 
-              if (!transactionDetails[_market]) {
+              if (!transactionDetails[address]) {
                 marketAddresses.push(_market);
-                transactionDetails[_market] = {};
+                transactionDetails[address] = {};
               }
 
-              if (!transactionDetails[_market][_optionId])
-                transactionDetails[_market][_optionId] = parseInt(_amount);
-              else transactionDetails[_market][_optionId] += parseInt(_amount);
+              if (!transactionDetails[address][_optionId])
+                transactionDetails[address][_optionId] = parseInt(_amount);
+              else transactionDetails[address][_optionId] += parseInt(_amount);
             });
             return transactionDetails;
           })
