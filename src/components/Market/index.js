@@ -77,13 +77,14 @@ const Market = ({
     }
   }
 
-  const questionStake = async (amount, etherUnit, whichOption) => {
+  const questionStake = async (amount, etherUnit, whichOption, redeem) => {
     let actualAmount = amount;
     if (etherUnit === 1) {
       actualAmount = actualAmount * 10 ** 18;
     }
 
     if (phase === 1) {
+      console.log("bettings");
       const thisQuestion = await questionInstance(id);
 
       const data = {
@@ -118,9 +119,105 @@ const Market = ({
             },
           });
         });
+    } else if (phase === 3) {
+      const thisQuestion = await questionInstance(id);
 
-      setIsTransacting(true);
+      const data = {
+        question: details.details[0],
+        option: details.details[3][whichOption],
+        amount: `${etherUnit ? `${amount} ether` : `${amount} wei`}`,
+      };
+
+      thisQuestion.methods
+        .stakeForReporting(whichOption)
+        .send({
+          from: walletAddress,
+          value: actualAmount,
+        })
+        .then((tx) => {
+          history.push({
+            pathname: "/transaction",
+            state: {
+              newQuestion: false,
+              response: tx,
+              details: data,
+            },
+          });
+        })
+        .catch((err) => {
+          history.push({
+            pathname: "/transaction",
+            state: {
+              newQuestion: false,
+              response: { ...err, status: false, from: walletAddress, to: id },
+              details: data,
+            },
+          });
+        });
+    } else if (phase === 4) {
+      if (redeem === 2) {
+        const thisQuestion = await questionInstance(id);
+        thisQuestion.methods
+          .redeemReportingPayout()
+          .send({
+            from: walletAddress,
+          })
+          .then((tx) => {
+            history.push({
+              pathname: "/transaction",
+              state: {
+                newQuestion: false,
+                response: tx,
+              },
+            });
+          })
+          .catch((err) => {
+            history.push({
+              pathname: "/transaction",
+              state: {
+                newQuestion: false,
+                response: {
+                  ...err,
+                  status: false,
+                  from: walletAddress,
+                  to: id,
+                },
+              },
+            });
+          });
+      } else if (redeem === 1) {
+        const thisQuestion = await questionInstance(id);
+        thisQuestion.methods
+          .redeemStakedPayout()
+          .send({
+            from: walletAddress,
+          })
+          .then((tx) => {
+            history.push({
+              pathname: "/transaction",
+              state: {
+                newQuestion: false,
+                response: tx,
+              },
+            });
+          })
+          .catch((err) => {
+            history.push({
+              pathname: "/transaction",
+              state: {
+                newQuestion: false,
+                response: {
+                  ...err,
+                  status: false,
+                  from: walletAddress,
+                  to: id,
+                },
+              },
+            });
+          });
+      }
     }
+    setIsTransacting(true);
   };
 
   return details && !isTransacting ? (

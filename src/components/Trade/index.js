@@ -33,9 +33,13 @@ const Trade = ({
       className={styles.tradeContainer}
       onSubmit={(e) => {
         e.preventDefault();
-        if (phase === 1) {
+        if (phase === 1 || phase === 3) {
           wallet
-            ? makeTransaction(amount, etherUnit, whichOption)
+            ? makeTransaction(amount, etherUnit, whichOption, 0)
+            : showWalletModal();
+        } else if (phase === 4) {
+          wallet
+            ? makeTransaction(amount, etherUnit, whichOption, 1)
             : showWalletModal();
         }
       }}
@@ -81,9 +85,24 @@ const Trade = ({
         </div>
       </div>
       <div className={styles.trade}>
-        <button type="submit" background={phase !== 1 && "darkgrey"}>
-          Stake
+        <button
+          type="submit"
+          background={(phase !== 1 || phase !== 2) && "darkgrey"}
+        >
+          {phase === 1 || phase === 3 ? "Stake" : "Redeem Stake Payout"}
         </button>
+        {phase === 4 && (
+          <button
+            background={(phase !== 1 || phase !== 2) && "darkgrey"}
+            onClick={() => {
+              wallet
+                ? makeTransaction(amount, etherUnit, whichOption, 2)
+                : showWalletModal();
+            }}
+          >
+            Redeem Reporting Payout
+          </button>
+        )}
       </div>
     </form>
   );

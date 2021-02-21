@@ -11,7 +11,7 @@ const MarketItem = ({ market }) => {
           {/* {` ${market["owner"]}`} */}
         </p>
         <div className={styles.options}>
-          <p>Volume: {market["details"]["total"]} ether</p>
+          <p>Volume: {market["details"]["total"]} Matic</p>
           <div className={styles.voteOptions}>
             {market["details"][3].map((detail, id) => (
               <p key={id} className={styles.voteOption}>
