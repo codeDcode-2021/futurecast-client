@@ -6,7 +6,7 @@ const TradeDetails = ({ details }) => (
     {details.map(({ label, value }, i) => (
       <div key={i} className={styles.tradeDetail}>
         <p>{label}</p>
-        <p>{value}</p>
+        <p>{value} wei</p>
       </div>
     ))}
   </div>
