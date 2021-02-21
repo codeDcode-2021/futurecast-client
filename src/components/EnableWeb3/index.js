@@ -4,7 +4,10 @@ import { useEffect } from "react";
 
 import info from "./info.json";
 
-const portis = new Portis("1b0ac6e5-efa2-481a-a7d7-188b24722233", "kovan");
+const portis = new Portis(
+  "1b0ac6e5-efa2-481a-a7d7-188b24722233",
+  "maticMumbai"
+);
 
 const factory = (web3) =>
   new web3.eth.Contract(info.factoryInterface, info.factoryAddress);
