@@ -13,6 +13,7 @@ import NewQuestion from "./components/NewQuestion";
 import { UserProfile } from "./components/UserProfile";
 import EnableWeb3 from "./components/EnableWeb3";
 import TransactionComplete from "./components/TransactionComplete";
+import Footer from "./components/Footer";
 
 const getMarkets = async (factory, questionInstance) => {
   try {
@@ -172,6 +173,7 @@ const App = () => {
             <TransactionComplete />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </>
   );

@@ -27,7 +27,7 @@ const Trade = ({
 
   const etherUnits = [
     { value: 0, label: "Wei" },
-    { value: 1, label: "Ether" },
+    { value: 1, label: "Matic" },
   ];
 
   return (

@@ -71,8 +71,6 @@ const Market = ({
     }
   }
 
-  console.log(userHistory);
-
   useEffect(() => {
     if (markets) {
       const details = markets.filter((market) => market.details.address === id);
@@ -107,7 +105,7 @@ const Market = ({
       const data = {
         question: details.details[0],
         option: details.details[3][whichOption],
-        amount: `${etherUnit ? `${amount} ether` : `${amount} wei`}`,
+        amount: `${etherUnit ? `${amount} Matic` : `${amount} wei`}`,
       };
 
       thisQuestion.methods
