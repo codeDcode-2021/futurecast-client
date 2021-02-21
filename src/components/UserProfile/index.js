@@ -51,7 +51,7 @@ export const UserProfile = ({ walletAddress, recents, markets, web3 }) => {
         <div>
           <p>Wallet Address: {walletAddress}</p>
           <p>
-            Current balance: {parseFloat(balance / 10 ** 18).toFixed(3)} ether
+            Current balance: {parseFloat(balance / 10 ** 18).toFixed(3)} Matic
           </p>
         </div>
         <br />
