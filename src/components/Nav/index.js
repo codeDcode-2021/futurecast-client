@@ -23,8 +23,8 @@ const Nav = ({ setWallet, setShowWalletModal, wallet, walletAddress }) => {
     <div className={styles.nav}>
       <Link to="/">
         <h1 className={styles.logo}>
-          <span>Se</span>
-          <span>er</span>
+          <span>Future</span>
+          <span>Cast</span>
         </h1>
       </Link>
       {!wallet ? (
