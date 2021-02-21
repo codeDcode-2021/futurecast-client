@@ -2,6 +2,7 @@ import { useState } from "react";
 import Select from "react-select";
 
 import styles from "../../styles/Market.module.sass";
+import TradeDetails from "./TradeDetails";
 
 const Trade = ({
   details,
@@ -9,6 +10,7 @@ const Trade = ({
   showWalletModal,
   wallet,
   phase,
+  userHistory,
 }) => {
   const [whichOption, setWhichOption] = useState(0);
   const [amount, setAmount] = useState(null);
@@ -79,6 +81,14 @@ const Trade = ({
             required
           />
         </div>
+        {userHistory.length ? (
+          <>
+            <p>Previous bets:</p>
+            <TradeDetails details={userHistory} />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <div className={styles.trade}>
         <button type="submit" background={phase !== 1 && "darkgrey"}>

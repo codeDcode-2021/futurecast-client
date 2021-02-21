@@ -4,26 +4,14 @@ import styles from "../../styles/UserProfile.module.sass";
 import LoadingAnimation from "../LoadingAnimation";
 import MarketGrid from "../MarketGrid";
 
-const info = require("../EnableWeb3/info.json");
-
 const getBalance = async (web3, walletAddress) => {
   return await web3.eth.getBalance(walletAddress);
 };
 
-const mes = async (walletAddress, question, marketaddress) => {
-  return await question.getPastEvents("staked", {
-    filter: {
-      _market: [marketaddress],
-      _user: [walletAddress],
-    },
-    fromBlock: "10764030",
-    toBlock: "latest",
-  });
-};
-
-export const UserProfile = ({ walletAddress, markets, factory, web3 }) => {
-  const [balance, setBalance] = useState(0);
+export const UserProfile = ({ walletAddress, recents, markets, web3 }) => {
   const [myRecents, setMyRecents] = useState(null);
+  const [balance, setBalance] = useState(0);
+
   const history = useHistory();
 
   if (!walletAddress) {
@@ -38,55 +26,23 @@ export const UserProfile = ({ walletAddress, markets, factory, web3 }) => {
         .then((balance) => setBalance(balance))
         .catch((err) => console.log(err));
     }
-  }, [web3, factory, walletAddress]);
+  }, [web3, walletAddress]);
 
   useEffect(() => {
-    if (markets && walletAddress) {
-      let transactionDetails = {};
-      const marketAddresses = [];
-      markets.forEach((item, id) => {
-        const question = new web3.eth.Contract(
-          info.questionInterface,
-          item.details.address
-        );
-
-        mes(walletAddress, question, item.details.address)
-          .then((obj) => {
-            obj.forEach((item) => {
-              const { _amount, _market, _optionId } = { ...item.returnValues };
-              const { address } = { ...item };
-
-              if (!transactionDetails[address]) {
-                marketAddresses.push(_market);
-                transactionDetails[address] = {};
-              }
-
-              if (!transactionDetails[address][_optionId])
-                transactionDetails[address][_optionId] = parseInt(_amount);
-              else transactionDetails[address][_optionId] += parseInt(_amount);
-            });
-            return transactionDetails;
-          })
-          .then((transactionDetails) => {
-            if (id === markets.length - 1) {
-              const recentMarkets = markets.filter((market) => {
-                const marketAddresses = Object.keys(transactionDetails);
-                for (let i = 0; i < marketAddresses.length; i++) {
-                  if (market.details.address === marketAddresses[i]) {
-                    market.details["options"] =
-                      transactionDetails[marketAddresses[i]];
-                    return true;
-                  }
-                }
-                return false;
-              });
-              setMyRecents([...recentMarkets]);
-            }
-          })
-          .catch((err) => console.log(err));
+    if (markets && recents) {
+      const recentMarkets = markets.filter((market) => {
+        const marketAddresses = Object.keys(recents);
+        for (let i = 0; i < marketAddresses.length; i++) {
+          if (market.details.address === marketAddresses[i]) {
+            market.details["options"] = recents[marketAddresses[i]];
+            return true;
+          }
+        }
+        return false;
       });
+      setMyRecents([...recentMarkets]);
     }
-  }, [markets, walletAddress, web3]);
+  }, [markets, recents]);
 
   return walletAddress ? (
     <>

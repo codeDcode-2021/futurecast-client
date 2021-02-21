@@ -3,9 +3,9 @@ import styles from "../../../styles/Market.module.sass";
 
 const TradeDetails = ({ details }) => (
   <div className={styles.tradeDetails}>
-    {details.map(({ detailLabel, value }, i) => (
+    {details.map(({ label, value }, i) => (
       <div key={i} className={styles.tradeDetail}>
-        <p>{detailLabel}</p>
+        <p>{label}</p>
         <p>{value}</p>
       </div>
     ))}
