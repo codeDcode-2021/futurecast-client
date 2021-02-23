@@ -60,13 +60,13 @@ Yes, it's that simple! 😆
 </div>
 <div align="center">
   <div>
-    <img src="./screenshots/mobile/landing.png" width="300px"/>
-    <img src="./screenshots/mobile/market1.png" width="300px"/>
-    <img src="./screenshots/mobile/market2.png" width="300px"/>
+    <img src="./screenshots/mobile/landing.png" width="240px"/>
+    <img src="./screenshots/mobile/market1.png" width="240px"/>
+    <img src="./screenshots/mobile/market2.png" width="240px"/>
   </div>
   <div>
-    <img src="./screenshots/mobile/newquestion.png" width="300px"/>
-    <img src="./screenshots/mobile/dashboard.png" width="300px"/>
+    <img src="./screenshots/mobile/newquestion.png" width="240px"/>
+    <img src="./screenshots/mobile/dashboard.png" width="240px"/>
   </div>
   <p align="center">Mobile View</p>
  </div>
