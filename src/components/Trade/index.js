@@ -79,7 +79,7 @@ const Trade = ({
             placeholder="0.00"
             value={amount ? amount : ""}
             onChange={(e) => setAmount(e.target.value)}
-            disabled={phase !== 1 ? true : false}
+            disabled={phase !== 1 && phase !== 3 ? true : false}
             required
           />
         </div>
@@ -87,7 +87,7 @@ const Trade = ({
       <div className={styles.trade}>
         <button
           type="submit"
-          background={(phase !== 1 || phase !== 2) && "darkgrey"}
+          background={(phase !== 1 || phase !== 3) && "darkgrey"}
         >
           {phase === 1 || phase === 3 ? "Stake" : "Redeem Stake Payout"}
         </button>
