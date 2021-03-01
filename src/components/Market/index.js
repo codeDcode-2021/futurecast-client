@@ -88,6 +88,8 @@ const Market = ({
       phase = 1;
     } else if (date >= dates[1] && date <= dates[2]) {
       phase = 2;
+    } else if (details.details.resolvedPercentage > 50) {
+      phase = 4;
     } else if (date >= dates[2]) {
       phase = 3;
     }
@@ -135,7 +137,7 @@ const Market = ({
             },
           });
         });
-    } else if (phase === 3) {
+    } else if (phase === 3 && redeem === 0) {
       const thisQuestion = await questionInstance(id);
 
       const data = {
@@ -173,6 +175,15 @@ const Market = ({
     } else if (phase === 4) {
       if (redeem === 2) {
         const thisQuestion = await questionInstance(id);
+
+        const data = {
+          question: "Redeeming Reporting Payout",
+          option: "NA",
+          amount: "NA",
+        };
+
+        console.log(data);
+
         thisQuestion.methods
           .redeemReportingPayout()
           .send({
@@ -184,6 +195,7 @@ const Market = ({
               state: {
                 newQuestion: false,
                 response: tx,
+                details: data,
               },
             });
           })
@@ -198,10 +210,17 @@ const Market = ({
                   from: walletAddress,
                   to: id,
                 },
+                details: data,
               },
             });
           });
       } else if (redeem === 1) {
+        const data = {
+          question: "Redeeming Reporting Payout",
+          option: "NA",
+          amount: "NA",
+        };
+
         const thisQuestion = await questionInstance(id);
         thisQuestion.methods
           .redeemStakedPayout()
@@ -214,6 +233,7 @@ const Market = ({
               state: {
                 newQuestion: false,
                 response: tx,
+                details: data,
               },
             });
           })
@@ -228,6 +248,7 @@ const Market = ({
                   from: walletAddress,
                   to: id,
                 },
+                details: data,
               },
             });
           });

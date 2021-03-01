@@ -34,10 +34,22 @@ const getMarkets = async (factory, questionInstance) => {
         let values = [...pubVar[2][0]];
         let total = 0;
 
+        let reportingTotal = 0;
+        let reportingValues = [...pubVar[2][1]];
+
         values.forEach((value) => (total += parseInt(value)));
+        reportingValues.forEach((value) => (reportingTotal += parseInt(value)));
+
+        let max = reportingValues.sort((a, b) => parseInt(b) - parseInt(a));
+        max = max[0];
+
+        max = reportingValues.findIndex((elt) => elt === max);
+
         let percentage = values.map((value) =>
           total ? parseFloat((value / total) * 100).toFixed(2) : 0
         );
+
+        let resolvedPercentage = (reportingTotal / total) * 100;
 
         pubVar[2] = [[...percentage], [...pubVar[2][1]]];
         pubVar["total"] = total
@@ -45,7 +57,7 @@ const getMarkets = async (factory, questionInstance) => {
           : total;
 
         const infoObject = {
-          details: { ...pubVar, address: addr },
+          details: { ...pubVar, address: addr, resolvedPercentage, max },
         };
 
         return infoObject;
