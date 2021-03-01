@@ -35,9 +35,13 @@ const Trade = ({
       className={styles.tradeContainer}
       onSubmit={(e) => {
         e.preventDefault();
-        if (phase === 1) {
+        if (phase === 1 || phase === 3) {
           wallet
-            ? makeTransaction(amount, etherUnit, whichOption)
+            ? makeTransaction(amount, etherUnit, whichOption, 0)
+            : showWalletModal();
+        } else if (phase === 4) {
+          wallet
+            ? makeTransaction(amount, etherUnit, whichOption, 1)
             : showWalletModal();
         }
       }}
@@ -51,9 +55,13 @@ const Trade = ({
                 key={id}
                 type="button"
                 className={
-                  whichOption === id ? buttonColorClasses[id] : undefined
+                  details.details.max === id && phase === 4
+                    ? buttonColorClasses[0]
+                    : phase !== 4 && whichOption === id
+                    ? buttonColorClasses[id]
+                    : undefined
                 }
-                onClick={() => setWhichOption(id)}
+                onClick={() => !(phase === 4) && setWhichOption(id)}
               >
                 {option}
                 <span>{` - ${details.details[2][0][id]}%`}</span>
@@ -78,7 +86,7 @@ const Trade = ({
             placeholder="0.00"
             value={amount ? amount : ""}
             onChange={(e) => setAmount(e.target.value)}
-            disabled={phase !== 1 ? true : false}
+            disabled={phase !== 1 && phase !== 3 ? true : false}
             required
           />
         </div>
@@ -92,9 +100,38 @@ const Trade = ({
         )}
       </div>
       <div className={styles.trade}>
-        <button type="submit" background={phase !== 1 && "darkgrey"}>
-          Stake
-        </button>
+        {(phase === 1 || phase === 3) && (
+          <button
+            type="submit"
+            background={(phase !== 1 || phase !== 3) && "darkgrey"}
+          >
+            Stake
+          </button>
+        )}
+        {phase === 4 && (
+          <button
+            onClick={() => {
+              wallet
+                ? makeTransaction(amount, etherUnit, whichOption, 1)
+                : showWalletModal();
+            }}
+            style={{ margin: "4px 0" }}
+          >
+            Redeem Stake Payout
+          </button>
+        )}
+        {phase === 4 && (
+          <button
+            onClick={() => {
+              wallet
+                ? makeTransaction(amount, etherUnit, whichOption, 2)
+                : showWalletModal();
+            }}
+            style={{ margin: "4px 0" }}
+          >
+            Redeem Reporting Payout
+          </button>
+        )}
       </div>
     </form>
   );
