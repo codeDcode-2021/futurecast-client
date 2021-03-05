@@ -41,7 +41,11 @@ const DesignedBy = styled.p`
 const Footer = () => (
   <div className={styles.container}>
     <a href="https://explorer-mumbai.maticvigil.com/address/0x42da4804CFF6f81B256516a36431AA122ee42559/transactions">
-      <DesignedBy>Deployed @ Matic Mumbai Testnet</DesignedBy>
+      <DesignedBy>
+        Deployed @ Matic Mumbai Testnet
+        <br></br>
+        Wallet Providers: Portis & MetaMask
+      </DesignedBy>
     </a>
     <DesignedBy>
       <div>designed and built with</div>
